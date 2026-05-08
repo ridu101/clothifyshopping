@@ -63,6 +63,65 @@ const HeroCarousel = ({ products: incoming }: Props) => {
   };
 
   const active = items[current];
+  type CarouselSlot = "left" | "center" | "right";
+
+  const visibleSlides = useMemo(() => {
+    const total = items.length;
+    const slides: Array<{ slot: CarouselSlot; product: Product; index: number }> = [
+      {
+        slot: "center",
+        product: active,
+        index: current,
+      },
+    ];
+
+    if (total > 1) {
+      slides.unshift({
+        slot: "left",
+        product: items[(current - 1 + total) % total],
+        index: (current - 1 + total) % total,
+      });
+
+      slides.push({
+        slot: "right",
+        product: items[(current + 1) % total],
+        index: (current + 1) % total,
+      });
+    }
+
+    return slides;
+  }, [active, current, items]);
+
+  const getSlotMotion = (slot: CarouselSlot) => {
+    const states = {
+      left: {
+        x: -360,
+        scale: 0.82,
+        opacity: 0.7,
+        zIndex: 10,
+        rotateY: 8,
+        filter: "blur(0.8px)",
+      },
+      center: {
+        x: 0,
+        scale: 1,
+        opacity: 1,
+        zIndex: 30,
+        rotateY: 0,
+        filter: "blur(0px)",
+      },
+      right: {
+        x: 360,
+        scale: 0.82,
+        opacity: 0.7,
+        zIndex: 10,
+        rotateY: -8,
+        filter: "blur(0.8px)",
+      },
+    };
+
+    return states[slot];
+  };
 
   return (
     <div className="relative w-full">
