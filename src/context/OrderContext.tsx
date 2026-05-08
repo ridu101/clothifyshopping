@@ -87,7 +87,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const placeOrder = useCallback(async (data: Omit<Order, "id" | "status" | "createdAt">): Promise<Order | null> => {
     if (!user) return null;
-    const insertData = {
+    const insertData: any = {
       user_id: user.id,
       customer_name: data.customerName,
       phone: data.phone,
@@ -98,6 +98,8 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       subtotal: data.subtotal,
       delivery_charge: data.deliveryCharge,
       total_price: data.totalPrice,
+      payment_method: data.paymentMethod ?? "cod",
+      payment_status: data.paymentMethod === "sslcommerz" ? "pending" : "pending",
     };
     const { data: inserted, error } = await supabase.from("orders").insert(insertData).select().single();
 
