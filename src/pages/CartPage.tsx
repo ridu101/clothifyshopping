@@ -145,8 +145,23 @@ const CartPage = () => {
                 <span className="price-text text-xl">৳{finalTotal}</span>
               </div>
             </div>
-            <div className="mt-4 text-xs text-muted-foreground glass-panel rounded-xl p-3">💰 Payment: Cash On Delivery</div>
-            <button onClick={handleCheckout} className="neon-button w-full py-3.5 mt-6 text-base font-heading font-semibold">Place Order</button>
+            <div className="mt-4">
+              <p className="text-xs text-muted-foreground mb-2">Payment Method</p>
+              <div className="grid grid-cols-2 gap-2">
+                <button onClick={() => setPaymentMethod("cod")} className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-mono transition-all duration-300 ${paymentMethod === "cod" ? "neon-button" : "glass-panel hover:bg-primary/5"}`}>
+                  <Wallet className="w-3.5 h-3.5" /> Cash on Delivery
+                </button>
+                <button onClick={() => setPaymentMethod("sslcommerz")} className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-mono transition-all duration-300 ${paymentMethod === "sslcommerz" ? "neon-button" : "glass-panel hover:bg-primary/5"}`}>
+                  <CreditCard className="w-3.5 h-3.5" /> Online (bKash/Card)
+                </button>
+              </div>
+              {paymentMethod === "sslcommerz" && (
+                <p className="text-[11px] text-muted-foreground mt-2">Powered by SSLCommerz Sandbox · bKash · Nagad · Rocket · Visa/MC</p>
+              )}
+            </div>
+            <button onClick={handleCheckout} className="neon-button w-full py-3.5 mt-6 text-base font-heading font-semibold">
+              {paymentMethod === "sslcommerz" ? "Proceed to Payment" : "Place Order"}
+            </button>
           </div>
         </div>
       </motion.div>
