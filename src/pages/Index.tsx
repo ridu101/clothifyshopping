@@ -49,6 +49,38 @@ const Index = () => {
         <HeroCarousel products={latestProducts} />
       </section>
 
+      {/* Feature strip */}
+      <section className="px-6 pb-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {features.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="glass-card p-5 md:p-6 rounded-3xl flex items-center gap-4 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(120,116,236,0.25)] transition-all duration-300"
+            >
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                style={{
+                  background: "linear-gradient(135deg, #7874EC 0%, #9F9CF7 100%)",
+                  boxShadow: "0 8px 20px rgba(120,116,236,0.4)",
+                }}
+              >
+                <f.icon className="w-5 h-5 text-white" />
+              </div>
+              <div className="min-w-0">
+                <h3 className="font-heading font-semibold text-sm md:text-base text-foreground truncate">
+                  {f.title}
+                </h3>
+                <p className="text-xs text-muted-foreground truncate">{f.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* Seasonal Collection (if selected) */}
       {savedSeason && seasonalProducts.length > 0 && (
         <section className="px-6 py-16 max-w-7xl mx-auto">
