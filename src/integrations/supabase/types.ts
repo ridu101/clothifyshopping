@@ -17,6 +17,8 @@ export type Database = {
       orders: {
         Row: {
           address: string
+          bank_tran_id: string | null
+          card_type: string | null
           city: string
           created_at: string
           customer_name: string
@@ -24,6 +26,8 @@ export type Database = {
           delivery_type: string
           id: string
           items: Json
+          payment_method: string
+          payment_status: string
           phone: string
           return_reason: string | null
           return_requested_at: string | null
@@ -31,11 +35,14 @@ export type Database = {
           status: string
           subtotal: number
           total_price: number
+          transaction_id: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
           address: string
+          bank_tran_id?: string | null
+          card_type?: string | null
           city: string
           created_at?: string
           customer_name: string
@@ -43,6 +50,8 @@ export type Database = {
           delivery_type: string
           id?: string
           items?: Json
+          payment_method?: string
+          payment_status?: string
           phone: string
           return_reason?: string | null
           return_requested_at?: string | null
@@ -50,11 +59,14 @@ export type Database = {
           status?: string
           subtotal?: number
           total_price?: number
+          transaction_id?: string | null
           updated_at?: string
           user_id: string
         }
         Update: {
           address?: string
+          bank_tran_id?: string | null
+          card_type?: string | null
           city?: string
           created_at?: string
           customer_name?: string
@@ -62,6 +74,8 @@ export type Database = {
           delivery_type?: string
           id?: string
           items?: Json
+          payment_method?: string
+          payment_status?: string
           phone?: string
           return_reason?: string | null
           return_requested_at?: string | null
@@ -69,6 +83,7 @@ export type Database = {
           status?: string
           subtotal?: number
           total_price?: number
+          transaction_id?: string | null
           updated_at?: string
           user_id?: string
         }

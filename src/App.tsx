@@ -36,6 +36,9 @@ import AdminReturns from "./pages/admin/AdminReturns";
 import AdminSells from "./pages/admin/AdminSells";
 import WishlistPage from "./pages/WishlistPage";
 import ProfilePage from "./pages/ProfilePage";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage";
+import PaymentFailPage from "./pages/PaymentFailPage";
+import PaymentCancelPage from "./pages/PaymentCancelPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -76,6 +79,9 @@ const App = () => (
                     <Route path="/admin/sells" element={<ProtectedRoute adminOnly><AdminSells /></ProtectedRoute>} />
                     <Route path="/wishlist" element={<ProtectedRoute><WishlistPage /></ProtectedRoute>} />
                     <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+                    <Route path="/payment/success" element={<PaymentSuccessPage />} />
+                    <Route path="/payment/fail" element={<PaymentFailPage />} />
+                    <Route path="/payment/cancel" element={<PaymentCancelPage />} />
                     <Route path="/product/:id" element={<ProductPage />} />
                     <Route path="/panjabi" element={<CategoryPage />} />
                     <Route path="/shirt" element={<CategoryPage />} />

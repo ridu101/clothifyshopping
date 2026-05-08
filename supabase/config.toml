@@ -1,1 +1,7 @@
 project_id = "akpvnfhybejofdspezxg"
+
+[functions.sslcommerz-ipn]
+verify_jwt = false
+
+[functions.sslcommerz-init]
+verify_jwt = true

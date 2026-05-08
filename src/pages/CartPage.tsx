@@ -2,10 +2,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useOrders } from "@/context/OrderContext";
-import { Minus, Plus, Trash2, ArrowLeft, CheckCircle, X } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowLeft, CheckCircle, X, Wallet, CreditCard } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const CartPage = () => {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
@@ -13,6 +14,7 @@ const CartPage = () => {
   const { placeOrder } = useOrders();
   const navigate = useNavigate();
   const [deliveryLocation, setDeliveryLocation] = useState<"dhaka" | "outside">("dhaka");
+  const [paymentMethod, setPaymentMethod] = useState<"cod" | "sslcommerz">("cod");
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -36,6 +38,31 @@ const CartPage = () => {
       return;
     }
     setSubmitting(true);
+
+    if (paymentMethod === "sslcommerz") {
+      const { data, error } = await supabase.functions.invoke("sslcommerz-init", {
+        body: {
+          customerName: orderForm.name,
+          phone: orderForm.phone,
+          address: orderForm.address,
+          city: orderForm.city,
+          deliveryType: deliveryLocation,
+          items: JSON.parse(JSON.stringify(items)),
+          subtotal: totalPrice,
+          deliveryCharge,
+          totalPrice: finalTotal,
+          returnOrigin: window.location.origin,
+        },
+      });
+      setSubmitting(false);
+      if (error || !(data as any)?.gatewayUrl) {
+        toast.error((data as any)?.error || error?.message || "Failed to start payment");
+        return;
+      }
+      window.location.href = (data as any).gatewayUrl;
+      return;
+    }
+
     const order = await placeOrder({
       customerName: orderForm.name,
       phone: orderForm.phone,
@@ -47,6 +74,8 @@ const CartPage = () => {
       deliveryCharge,
       totalPrice: finalTotal,
       userId: user?.id || "",
+      paymentMethod: "cod",
+      paymentStatus: "pending",
     });
     setSubmitting(false);
     if (order) {
@@ -116,8 +145,23 @@ const CartPage = () => {
                 <span className="price-text text-xl">৳{finalTotal}</span>
               </div>
             </div>
-            <div className="mt-4 text-xs text-muted-foreground glass-panel rounded-xl p-3">💰 Payment: Cash On Delivery</div>
-            <button onClick={handleCheckout} className="neon-button w-full py-3.5 mt-6 text-base font-heading font-semibold">Place Order</button>
+            <div className="mt-4">
+              <p className="text-xs text-muted-foreground mb-2">Payment Method</p>
+              <div className="grid grid-cols-2 gap-2">
+                <button onClick={() => setPaymentMethod("cod")} className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-mono transition-all duration-300 ${paymentMethod === "cod" ? "neon-button" : "glass-panel hover:bg-primary/5"}`}>
+                  <Wallet className="w-3.5 h-3.5" /> Cash on Delivery
+                </button>
+                <button onClick={() => setPaymentMethod("sslcommerz")} className={`flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-mono transition-all duration-300 ${paymentMethod === "sslcommerz" ? "neon-button" : "glass-panel hover:bg-primary/5"}`}>
+                  <CreditCard className="w-3.5 h-3.5" /> Online (bKash/Card)
+                </button>
+              </div>
+              {paymentMethod === "sslcommerz" && (
+                <p className="text-[11px] text-muted-foreground mt-2">Powered by SSLCommerz Sandbox · bKash · Nagad · Rocket · Visa/MC</p>
+              )}
+            </div>
+            <button onClick={handleCheckout} className="neon-button w-full py-3.5 mt-6 text-base font-heading font-semibold">
+              {paymentMethod === "sslcommerz" ? "Proceed to Payment" : "Place Order"}
+            </button>
           </div>
         </div>
       </motion.div>
@@ -137,10 +181,10 @@ const CartPage = () => {
                 <input placeholder="City" value={orderForm.city} onChange={e => setOrderForm(p => ({ ...p, city: e.target.value }))} className={inputCls} required />
                 <div className="glass-panel rounded-xl p-3 text-sm">
                   <div className="flex justify-between text-muted-foreground"><span>Total</span><span className="price-text">৳{finalTotal}</span></div>
-                  <div className="flex justify-between text-muted-foreground mt-1"><span>Payment</span><span>Cash On Delivery</span></div>
+                  <div className="flex justify-between text-muted-foreground mt-1"><span>Payment</span><span>{paymentMethod === "sslcommerz" ? "Online (SSLCommerz)" : "Cash On Delivery"}</span></div>
                 </div>
                 <button type="submit" disabled={submitting} className="neon-button w-full py-3 text-sm font-heading font-semibold disabled:opacity-60">
-                  {submitting ? "Placing Order..." : "Confirm Order"}
+                  {submitting ? (paymentMethod === "sslcommerz" ? "Redirecting..." : "Placing Order...") : (paymentMethod === "sslcommerz" ? "Pay Now" : "Confirm Order")}
                 </button>
               </form>
             </motion.div>

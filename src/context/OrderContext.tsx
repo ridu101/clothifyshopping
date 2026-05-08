@@ -21,6 +21,11 @@ export interface Order {
   returnRequestedAt?: string | null;
   createdAt: string;
   userId: string;
+  paymentMethod?: "cod" | "sslcommerz";
+  paymentStatus?: "pending" | "paid" | "failed" | "cancelled";
+  transactionId?: string | null;
+  cardType?: string | null;
+  bankTranId?: string | null;
 }
 
 interface OrderContextType {
@@ -57,6 +62,11 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     returnRequestedAt: o.return_requested_at,
     createdAt: o.created_at,
     userId: o.user_id,
+    paymentMethod: (o.payment_method ?? "cod") as Order["paymentMethod"],
+    paymentStatus: (o.payment_status ?? "pending") as Order["paymentStatus"],
+    transactionId: o.transaction_id,
+    cardType: o.card_type,
+    bankTranId: o.bank_tran_id,
   });
 
   const fetchOrders = useCallback(async () => {
@@ -77,7 +87,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const placeOrder = useCallback(async (data: Omit<Order, "id" | "status" | "createdAt">): Promise<Order | null> => {
     if (!user) return null;
-    const insertData = {
+    const insertData: any = {
       user_id: user.id,
       customer_name: data.customerName,
       phone: data.phone,
@@ -88,6 +98,8 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       subtotal: data.subtotal,
       delivery_charge: data.deliveryCharge,
       total_price: data.totalPrice,
+      payment_method: data.paymentMethod ?? "cod",
+      payment_status: data.paymentMethod === "sslcommerz" ? "pending" : "pending",
     };
     const { data: inserted, error } = await supabase.from("orders").insert(insertData).select().single();
 
