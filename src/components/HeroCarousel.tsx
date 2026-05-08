@@ -165,43 +165,33 @@ const HeroCarousel = ({ products: incoming }: Props) => {
         style={{ boxShadow: "0 30px 100px rgba(120,116,236,0.25)" }}
       >
         {/* Carousel cards */}
-        <div className="relative w-full h-full flex items-center justify-center">
-          {items.map((p, i) => {
-            const rel = getRel(i);
-            const isActive = rel === 0;
-            const abs = Math.abs(rel);
-            if (abs > 1) return null;
-            const hideOnMobile = abs > 0;
+        <div
+          className="relative w-full h-[620px] flex items-center justify-center overflow-visible"
+          style={{ perspective: "1400px", transformStyle: "preserve-3d" }}
+        >
+          {visibleSlides.map(({ product: p, index, slot }) => {
+            const isActive = slot === "center";
 
             return (
               <motion.div
-                key={p.id}
+                key={`${p.id}-${slot}`}
                 initial={false}
-                animate={{
-                  x: isActive ? "0%" : `${rel * 78}%`,
-                  scale: isActive ? 1 : 0.85,
-                  opacity: isActive ? 1 : 0.72,
-                  zIndex: isActive ? 10 : 5,
-                }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                onClick={() => !isActive && setCurrent(i)}
-                className={`absolute ${
-                  isActive ? "" : "cursor-pointer hover:scale-90"
-                } ${hideOnMobile ? "hidden lg:block" : ""}`}
+                animate={getSlotMotion(slot)}
+                transition={{ duration: 0.7, ease: "easeInOut" }}
+                onClick={() => !isActive && setCurrent(index)}
+                className={`absolute will-change-transform ${
+                  isActive ? "" : "hidden lg:block cursor-pointer"
+                }`}
                 style={{
-                  width: isActive
-                    ? "min(620px, 92%)"
-                    : "min(220px, 22%)",
-                  height: isActive ? "auto" : "auto",
+                  width: isActive ? "min(620px, 92vw)" : "240px",
+                  height: isActive ? "min(620px, 74vh)" : "420px",
+                  transformStyle: "preserve-3d",
                 }}
               >
                 {isActive ? (
-                  <ActiveCard
-                    p={p}
-                    onAddToCart={() => handleAddToCart(p)}
-                  />
+                  <ActiveCard p={p} onAddToCart={() => handleAddToCart(p)} />
                 ) : (
-                  <SideCard p={p} />
+                  <SideCard p={p} side={slot as "left" | "right"} />
                 )}
               </motion.div>
             );
