@@ -2,10 +2,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useOrders } from "@/context/OrderContext";
-import { Minus, Plus, Trash2, ArrowLeft, CheckCircle, X } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowLeft, CheckCircle, X, Wallet, CreditCard } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const CartPage = () => {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
@@ -13,6 +14,7 @@ const CartPage = () => {
   const { placeOrder } = useOrders();
   const navigate = useNavigate();
   const [deliveryLocation, setDeliveryLocation] = useState<"dhaka" | "outside">("dhaka");
+  const [paymentMethod, setPaymentMethod] = useState<"cod" | "sslcommerz">("cod");
   const [showOrderForm, setShowOrderForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -36,6 +38,31 @@ const CartPage = () => {
       return;
     }
     setSubmitting(true);
+
+    if (paymentMethod === "sslcommerz") {
+      const { data, error } = await supabase.functions.invoke("sslcommerz-init", {
+        body: {
+          customerName: orderForm.name,
+          phone: orderForm.phone,
+          address: orderForm.address,
+          city: orderForm.city,
+          deliveryType: deliveryLocation,
+          items: JSON.parse(JSON.stringify(items)),
+          subtotal: totalPrice,
+          deliveryCharge,
+          totalPrice: finalTotal,
+          returnOrigin: window.location.origin,
+        },
+      });
+      setSubmitting(false);
+      if (error || !(data as any)?.gatewayUrl) {
+        toast.error((data as any)?.error || error?.message || "Failed to start payment");
+        return;
+      }
+      window.location.href = (data as any).gatewayUrl;
+      return;
+    }
+
     const order = await placeOrder({
       customerName: orderForm.name,
       phone: orderForm.phone,
@@ -47,6 +74,8 @@ const CartPage = () => {
       deliveryCharge,
       totalPrice: finalTotal,
       userId: user?.id || "",
+      paymentMethod: "cod",
+      paymentStatus: "pending",
     });
     setSubmitting(false);
     if (order) {
