@@ -36,6 +36,9 @@ import AdminReturns from "./pages/admin/AdminReturns";
 import AdminSells from "./pages/admin/AdminSells";
 import WishlistPage from "./pages/WishlistPage";
 import ProfilePage from "./pages/ProfilePage";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage";
+import PaymentFailPage from "./pages/PaymentFailPage";
+import PaymentCancelPage from "./pages/PaymentCancelPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
