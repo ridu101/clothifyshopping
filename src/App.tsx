@@ -79,6 +79,9 @@ const App = () => (
                     <Route path="/admin/sells" element={<ProtectedRoute adminOnly><AdminSells /></ProtectedRoute>} />
                     <Route path="/wishlist" element={<ProtectedRoute><WishlistPage /></ProtectedRoute>} />
                     <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+                    <Route path="/payment/success" element={<PaymentSuccessPage />} />
+                    <Route path="/payment/fail" element={<PaymentFailPage />} />
+                    <Route path="/payment/cancel" element={<PaymentCancelPage />} />
                     <Route path="/product/:id" element={<ProductPage />} />
                     <Route path="/panjabi" element={<CategoryPage />} />
                     <Route path="/shirt" element={<CategoryPage />} />
