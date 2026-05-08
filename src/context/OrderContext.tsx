@@ -21,6 +21,11 @@ export interface Order {
   returnRequestedAt?: string | null;
   createdAt: string;
   userId: string;
+  paymentMethod?: "cod" | "sslcommerz";
+  paymentStatus?: "pending" | "paid" | "failed" | "cancelled";
+  transactionId?: string | null;
+  cardType?: string | null;
+  bankTranId?: string | null;
 }
 
 interface OrderContextType {
