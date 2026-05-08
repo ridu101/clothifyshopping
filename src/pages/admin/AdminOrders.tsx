@@ -60,14 +60,24 @@ const AdminOrders = () => {
         <div className="space-y-4">
           {filtered.map(order => (
             <motion.div key={order.id} layout className="glass-panel rounded-2xl p-6">
-              <div className="flex items-start justify-between mb-4">
+              <div className="flex items-start justify-between mb-4 flex-wrap gap-2">
                 <div>
                   <p className="font-mono text-xs text-primary">{order.id.slice(0, 8)}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{new Date(order.createdAt).toLocaleString()}</p>
                 </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-mono capitalize border ${statusColor[order.status] || ""}`}>
-                  {order.status}
-                </span>
+                <div className="flex flex-col items-end gap-1.5">
+                  <span className={`px-3 py-1 rounded-full text-xs font-mono capitalize border ${statusColor[order.status] || ""}`}>
+                    {order.status}
+                  </span>
+                  <div className="flex items-center gap-1.5 text-[10px] font-mono">
+                    <span className={`px-2 py-0.5 rounded-full border ${order.paymentStatus === "paid" ? "text-emerald-600 bg-emerald-50 border-emerald-200" : order.paymentStatus === "failed" ? "text-red-600 bg-red-50 border-red-200" : order.paymentStatus === "cancelled" ? "text-amber-600 bg-amber-50 border-amber-200" : "text-slate-600 bg-slate-50 border-slate-200"}`}>
+                      💳 {order.paymentMethod === "sslcommerz" ? "SSLCommerz" : "COD"} · {order.paymentStatus ?? "pending"}
+                    </span>
+                  </div>
+                  {order.transactionId && (
+                    <span className="text-[10px] font-mono text-muted-foreground">TXN: {order.transactionId}</span>
+                  )}
+                </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="space-y-1.5">
