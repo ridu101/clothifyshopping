@@ -328,12 +328,14 @@ const ActiveCard = ({
 };
 
 /* ---------- Side preview card ---------- */
-const SideCard = ({ p }: { p: Product }) => (
+const SideCard = ({ p, side }: { p: Product; side: "left" | "right" }) => (
   <div
-    className="relative w-full overflow-hidden rounded-[28px] border border-white/50 bg-white/60 backdrop-blur-xl transition-all duration-300 hover:shadow-[0_20px_50px_rgba(120,116,236,0.35)]"
+    className="relative w-full h-full overflow-hidden rounded-[28px] border border-white/50 bg-white/65 backdrop-blur-md transition-all duration-300 hover:shadow-[0_20px_50px_rgba(120,116,236,0.35)]"
     style={{
-      boxShadow: "0 12px 40px rgba(120,116,236,0.2)",
-      height: "min(420px, 60vh)",
+      boxShadow:
+        side === "left"
+          ? "-18px 24px 55px rgba(120,116,236,0.28)"
+          : "18px 24px 55px rgba(120,116,236,0.28)",
     }}
   >
     <div className="relative w-full h-full">
@@ -343,12 +345,12 @@ const SideCard = ({ p }: { p: Product }) => (
         loading="lazy"
         className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/22 to-white/5" />
+      <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
         <span className="text-[10px] uppercase tracking-[0.25em] text-purple-200">
           {p.category}
         </span>
-        <h3 className="font-heading text-base font-semibold truncate">
+        <h3 className="font-heading text-base font-semibold leading-tight line-clamp-2 mt-1">
           {p.title}
         </h3>
         <span className="text-sm font-bold">৳{p.price}</span>
