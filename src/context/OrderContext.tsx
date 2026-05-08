@@ -62,6 +62,11 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     returnRequestedAt: o.return_requested_at,
     createdAt: o.created_at,
     userId: o.user_id,
+    paymentMethod: (o.payment_method ?? "cod") as Order["paymentMethod"],
+    paymentStatus: (o.payment_status ?? "pending") as Order["paymentStatus"],
+    transactionId: o.transaction_id,
+    cardType: o.card_type,
+    bankTranId: o.bank_tran_id,
   });
 
   const fetchOrders = useCallback(async () => {
