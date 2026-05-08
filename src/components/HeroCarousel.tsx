@@ -47,14 +47,6 @@ const HeroCarousel = ({ products: incoming }: Props) => {
 
   if (!items.length) return null;
 
-  const getRel = (i: number) => {
-    const n = items.length;
-    let d = i - current;
-    if (d > n / 2) d -= n;
-    if (d < -n / 2) d += n;
-    return d;
-  };
-
   const handleAddToCart = (p: Product) => {
     const size = p.sizes?.[0] ?? "M";
     addItem(p, size);
@@ -63,6 +55,65 @@ const HeroCarousel = ({ products: incoming }: Props) => {
   };
 
   const active = items[current];
+  type CarouselSlot = "left" | "center" | "right";
+
+  const visibleSlides = useMemo(() => {
+    const total = items.length;
+    const slides: Array<{ slot: CarouselSlot; product: Product; index: number }> = [
+      {
+        slot: "center",
+        product: active,
+        index: current,
+      },
+    ];
+
+    if (total > 1) {
+      slides.unshift({
+        slot: "left",
+        product: items[(current - 1 + total) % total],
+        index: (current - 1 + total) % total,
+      });
+
+      slides.push({
+        slot: "right",
+        product: items[(current + 1) % total],
+        index: (current + 1) % total,
+      });
+    }
+
+    return slides;
+  }, [active, current, items]);
+
+  const getSlotMotion = (slot: CarouselSlot) => {
+    const states = {
+      left: {
+        x: -430,
+        scale: 0.82,
+        opacity: 0.7,
+        zIndex: 10,
+        rotateY: 8,
+        filter: "blur(0.8px)",
+      },
+      center: {
+        x: 0,
+        scale: 1,
+        opacity: 1,
+        zIndex: 30,
+        rotateY: 0,
+        filter: "blur(0px)",
+      },
+      right: {
+        x: 430,
+        scale: 0.82,
+        opacity: 0.7,
+        zIndex: 10,
+        rotateY: -8,
+        filter: "blur(0.8px)",
+      },
+    };
+
+    return states[slot];
+  };
 
   return (
     <div className="relative w-full">
@@ -106,43 +157,33 @@ const HeroCarousel = ({ products: incoming }: Props) => {
         style={{ boxShadow: "0 30px 100px rgba(120,116,236,0.25)" }}
       >
         {/* Carousel cards */}
-        <div className="relative w-full h-full flex items-center justify-center">
-          {items.map((p, i) => {
-            const rel = getRel(i);
-            const isActive = rel === 0;
-            const abs = Math.abs(rel);
-            if (abs > 1) return null;
-            const hideOnMobile = abs > 0;
+        <div
+          className="relative w-full h-[620px] flex items-center justify-center overflow-visible"
+          style={{ perspective: "1400px", transformStyle: "preserve-3d" }}
+        >
+          {visibleSlides.map(({ product: p, index, slot }) => {
+            const isActive = slot === "center";
 
             return (
               <motion.div
-                key={p.id}
+                key={`${p.id}-${slot}`}
                 initial={false}
-                animate={{
-                  x: isActive ? "0%" : `${rel * 78}%`,
-                  scale: isActive ? 1 : 0.85,
-                  opacity: isActive ? 1 : 0.72,
-                  zIndex: isActive ? 10 : 5,
-                }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                onClick={() => !isActive && setCurrent(i)}
-                className={`absolute ${
-                  isActive ? "" : "cursor-pointer hover:scale-90"
-                } ${hideOnMobile ? "hidden lg:block" : ""}`}
+                animate={getSlotMotion(slot)}
+                transition={{ duration: 0.7, ease: "easeInOut" }}
+                onClick={() => !isActive && setCurrent(index)}
+                className={`absolute will-change-transform ${
+                  isActive ? "" : "hidden lg:block cursor-pointer"
+                }`}
                 style={{
-                  width: isActive
-                    ? "min(620px, 92%)"
-                    : "min(220px, 22%)",
-                  height: isActive ? "auto" : "auto",
+                  width: isActive ? "min(620px, 92vw)" : "240px",
+                  height: isActive ? "min(620px, 74vh)" : "420px",
+                  transformStyle: "preserve-3d",
                 }}
               >
                 {isActive ? (
-                  <ActiveCard
-                    p={p}
-                    onAddToCart={() => handleAddToCart(p)}
-                  />
+                  <ActiveCard p={p} onAddToCart={() => handleAddToCart(p)} />
                 ) : (
-                  <SideCard p={p} />
+                  <SideCard p={p} side={slot as "left" | "right"} />
                 )}
               </motion.div>
             );
@@ -287,12 +328,14 @@ const ActiveCard = ({
 };
 
 /* ---------- Side preview card ---------- */
-const SideCard = ({ p }: { p: Product }) => (
+const SideCard = ({ p, side }: { p: Product; side: "left" | "right" }) => (
   <div
-    className="relative w-full overflow-hidden rounded-[28px] border border-white/50 bg-white/60 backdrop-blur-xl transition-all duration-300 hover:shadow-[0_20px_50px_rgba(120,116,236,0.35)]"
+    className="relative w-full h-full overflow-hidden rounded-[28px] border border-white/50 bg-white/65 backdrop-blur-md transition-all duration-300 hover:shadow-[0_20px_50px_rgba(120,116,236,0.35)]"
     style={{
-      boxShadow: "0 12px 40px rgba(120,116,236,0.2)",
-      height: "min(420px, 60vh)",
+      boxShadow:
+        side === "left"
+          ? "-18px 24px 55px rgba(120,116,236,0.28)"
+          : "18px 24px 55px rgba(120,116,236,0.28)",
     }}
   >
     <div className="relative w-full h-full">
@@ -302,12 +345,12 @@ const SideCard = ({ p }: { p: Product }) => (
         loading="lazy"
         className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/22 to-white/5" />
+      <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
         <span className="text-[10px] uppercase tracking-[0.25em] text-purple-200">
           {p.category}
         </span>
-        <h3 className="font-heading text-base font-semibold truncate">
+        <h3 className="font-heading text-base font-semibold leading-tight line-clamp-2 mt-1">
           {p.title}
         </h3>
         <span className="text-sm font-bold">৳{p.price}</span>
