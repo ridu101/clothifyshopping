@@ -181,10 +181,10 @@ const CartPage = () => {
                 <input placeholder="City" value={orderForm.city} onChange={e => setOrderForm(p => ({ ...p, city: e.target.value }))} className={inputCls} required />
                 <div className="glass-panel rounded-xl p-3 text-sm">
                   <div className="flex justify-between text-muted-foreground"><span>Total</span><span className="price-text">৳{finalTotal}</span></div>
-                  <div className="flex justify-between text-muted-foreground mt-1"><span>Payment</span><span>Cash On Delivery</span></div>
+                  <div className="flex justify-between text-muted-foreground mt-1"><span>Payment</span><span>{paymentMethod === "sslcommerz" ? "Online (SSLCommerz)" : "Cash On Delivery"}</span></div>
                 </div>
                 <button type="submit" disabled={submitting} className="neon-button w-full py-3 text-sm font-heading font-semibold disabled:opacity-60">
-                  {submitting ? "Placing Order..." : "Confirm Order"}
+                  {submitting ? (paymentMethod === "sslcommerz" ? "Redirecting..." : "Placing Order...") : (paymentMethod === "sslcommerz" ? "Pay Now" : "Confirm Order")}
                 </button>
               </form>
             </motion.div>
