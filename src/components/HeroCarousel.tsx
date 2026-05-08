@@ -47,14 +47,6 @@ const HeroCarousel = ({ products: incoming }: Props) => {
 
   if (!items.length) return null;
 
-  const getRel = (i: number) => {
-    const n = items.length;
-    let d = i - current;
-    if (d > n / 2) d -= n;
-    if (d < -n / 2) d += n;
-    return d;
-  };
-
   const handleAddToCart = (p: Product) => {
     const size = p.sizes?.[0] ?? "M";
     addItem(p, size);
@@ -95,7 +87,7 @@ const HeroCarousel = ({ products: incoming }: Props) => {
   const getSlotMotion = (slot: CarouselSlot) => {
     const states = {
       left: {
-        x: -360,
+        x: -430,
         scale: 0.82,
         opacity: 0.7,
         zIndex: 10,
@@ -111,7 +103,7 @@ const HeroCarousel = ({ products: incoming }: Props) => {
         filter: "blur(0px)",
       },
       right: {
-        x: 360,
+        x: 430,
         scale: 0.82,
         opacity: 0.7,
         zIndex: 10,
