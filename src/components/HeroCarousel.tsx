@@ -183,11 +183,6 @@ const HeroCarousel = ({ products: incoming }: Props) => {
                         <span className="text-2xl md:text-3xl font-semibold text-white drop-shadow-md">
                           ৳{p.price}
                         </span>
-                        {p.originalPrice && p.originalPrice > p.price && (
-                          <span className="text-base text-white/50 line-through">
-                            ৳{p.originalPrice}
-                          </span>
-                        )}
                       </div>
 
                       <div className="flex flex-col sm:flex-row gap-3">
