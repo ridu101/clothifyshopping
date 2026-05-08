@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Star, Mail } from "lucide-react";
+import { ArrowRight, Star, Mail, Truck, RotateCcw, ShieldCheck, Gem } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import HeroCarousel from "@/components/HeroCarousel";
 import { categories } from "@/data/products";
 import { useProducts } from "@/context/ProductContext";
 import { toast } from "sonner";
+
+const features = [
+  { icon: Truck, title: "Free Delivery", desc: "On orders over ৳2000" },
+  { icon: RotateCcw, title: "Easy Returns", desc: "7-day return policy" },
+  { icon: ShieldCheck, title: "Secure Payment", desc: "Cash on Delivery" },
+  { icon: Gem, title: "Premium Quality", desc: "Handpicked materials" },
+];
 
 const Index = () => {
   const { getTrendingProducts, getFeaturedProducts, getSeasonalProducts, products } = useProducts();
