@@ -33,24 +33,24 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "app_settings" },
-        (payload: any) => {
-          const row = payload.new || payload.old;
-          if (row?.key === "active_season") {
-            setActiveSeasonState(payload.new?.value || "");
-          }
-        }
+        () => { fetchSettings(); }
       )
       .subscribe();
     return () => { supabase.removeChannel(channel); };
-  }, []);
+  }, [fetchSettings]);
 
   const setActiveSeason = useCallback(async (season: string) => {
+    setActiveSeasonState(season); // optimistic
     const { error } = await supabase
       .from("app_settings" as any)
-      .upsert({ key: "active_season", value: season }, { onConflict: "key" });
-    if (error) { toast.error("Failed to update collection"); return; }
-    setActiveSeasonState(season);
-  }, []);
+      .upsert({ key: "active_season", value: season, updated_at: new Date().toISOString() }, { onConflict: "key" });
+    if (error) {
+      toast.error(`Failed to update collection: ${error.message}`);
+      await fetchSettings();
+      return;
+    }
+    await fetchSettings();
+  }, [fetchSettings]);
 
   return (
     <SettingsContext.Provider value={{ activeSeason, setActiveSeason, loading }}>
