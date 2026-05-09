@@ -21,10 +21,11 @@ const CategoriesPage = () => {
                   <div className="aspect-[3/5] overflow-hidden">
                     <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="font-heading font-bold text-lg text-foreground">{cat.name}</h3>
-                    <span className="text-xs text-primary font-mono mt-1 inline-flex items-center gap-1">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/30 to-transparent" />
+                  <div className="absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-primary/0 group-hover:ring-primary/40 group-hover:shadow-[0_0_28px_hsl(var(--primary)/0.35)] transition-all duration-500 pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 right-0 p-2.5 md:p-4 text-center md:text-left">
+                    <h3 className="font-heading font-bold text-sm md:text-lg text-foreground truncate">{cat.name}</h3>
+                    <span className="text-[10px] md:text-xs text-primary font-mono mt-0.5 inline-flex items-center gap-1">
                       Explore <ArrowRight className="w-3 h-3" />
                     </span>
                   </div>
