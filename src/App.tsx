@@ -98,6 +98,7 @@ const App = () => (
                   </Routes>
                   <Footer />
                 </BrowserRouter>
+                </SettingsProvider>
                 </ReturnProvider>
               </OrderProvider>
             </WishlistProvider>
