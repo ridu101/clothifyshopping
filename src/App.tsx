@@ -9,6 +9,7 @@ import { WishlistProvider } from "@/context/WishlistContext";
 import { ProductProvider } from "@/context/ProductContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { ReturnProvider } from "@/context/ReturnContext";
+import { SettingsProvider } from "@/context/SettingsContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import Navbar from "@/components/Navbar";
