@@ -54,6 +54,7 @@ const App = () => (
             <WishlistProvider>
               <OrderProvider>
                 <ReturnProvider>
+                <SettingsProvider>
                 <Toaster />
                 <Sonner />
                 <BrowserRouter>
