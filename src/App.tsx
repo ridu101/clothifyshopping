@@ -14,6 +14,7 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 import Navbar from "@/components/Navbar";
 import CartDrawer from "@/components/CartDrawer";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import ShopPage from "./pages/ShopPage";
 import CategoriesPage from "./pages/CategoriesPage";
