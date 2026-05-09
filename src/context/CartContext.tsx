@@ -38,6 +38,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return [...prev, { product, quantity: 1, size }];
     });
     setIsCartOpen(true);
+    // Smooth-scroll to top so the user sees the cart drawer / navbar feedback.
+    if (typeof window !== "undefined") {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    }
   }, []);
 
   const removeItem = useCallback((productId: string, size: string) => {
