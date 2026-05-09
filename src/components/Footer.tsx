@@ -77,11 +77,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-
-        {/* Bottom */}
-        <div className="mt-5 md:mt-8 pt-3 md:pt-4 border-t border-white/10 text-center text-[10px] md:text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Clothify Shopping. Designed with ♥ by Ridwan Ahmed.
-        </div>
       </div>
     </footer>
   );
