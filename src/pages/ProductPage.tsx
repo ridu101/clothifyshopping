@@ -96,8 +96,10 @@ const ProductPage = () => {
             <p className="text-sm text-muted-foreground mt-1 font-mono">Year: {product.year}</p>
             <p className="text-sm md:text-base text-muted-foreground mt-4 md:mt-6 leading-relaxed break-words">{product.description}</p>
             <div className="flex items-center gap-2 mt-5 md:mt-6">
-              <Check className="w-4 h-4 text-primary shrink-0" />
-              <span className="text-sm text-primary font-mono">{product.stock} in stock</span>
+              <Check className={`w-4 h-4 shrink-0 ${product.stock > 0 ? "text-primary" : "text-destructive"}`} />
+              <span className={`text-sm font-mono ${product.stock > 0 ? "text-primary" : "text-destructive"}`}>
+                {product.stock > 0 ? `${product.stock} in stock` : "Out of Stock"}
+              </span>
             </div>
 
             {colors.length > 0 && (
