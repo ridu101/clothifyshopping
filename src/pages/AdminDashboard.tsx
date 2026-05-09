@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Package, ShoppingCart, BarChart3, RotateCcw, LogOut, Leaf } from "lucide-react";
