@@ -1,4 +1,28 @@
 import { defaultCategoryImages } from "@/lib/categoryImages";
+import shirtBlack from "@/assets/shirt-black.jpg";
+import shirtWhite from "@/assets/shirt-white.jpg";
+import shirtNavy from "@/assets/shirt-navy.jpg";
+import shirtSkyblue from "@/assets/shirt-skyblue.jpg";
+import shirtOlive from "@/assets/shirt-olive.jpg";
+import shirtMaroon from "@/assets/shirt-maroon.jpg";
+import shirtBeige from "@/assets/shirt-beige.jpg";
+import shirtDarkgrey from "@/assets/shirt-darkgrey.jpg";
+import shirtBottlegreen from "@/assets/shirt-bottlegreen.jpg";
+import shirtBrown from "@/assets/shirt-brown.jpg";
+
+// Premium luxury shirt catalog — same model, only color changes
+const shirtCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
+  { name: "Onyx Black Premium Shirt", image: shirtBlack, color: { name: "Black", code: "#1a1a1a" } },
+  { name: "Pearl White Premium Shirt", image: shirtWhite, color: { name: "White", code: "#f8f9fa" } },
+  { name: "Royal Navy Premium Shirt", image: shirtNavy, color: { name: "Navy Blue", code: "#0a2540" } },
+  { name: "Sky Blue Premium Shirt", image: shirtSkyblue, color: { name: "Sky Blue", code: "#7ab8e6" } },
+  { name: "Olive Green Premium Shirt", image: shirtOlive, color: { name: "Olive Green", code: "#556b2f" } },
+  { name: "Maroon Premium Shirt", image: shirtMaroon, color: { name: "Maroon", code: "#6e1423" } },
+  { name: "Beige Premium Shirt", image: shirtBeige, color: { name: "Beige", code: "#cdb393" } },
+  { name: "Charcoal Grey Premium Shirt", image: shirtDarkgrey, color: { name: "Dark Grey", code: "#3a3a3a" } },
+  { name: "Bottle Green Premium Shirt", image: shirtBottlegreen, color: { name: "Bottle Green", code: "#0b3d2e" } },
+  { name: "Chocolate Brown Premium Shirt", image: shirtBrown, color: { name: "Chocolate Brown", code: "#3e1f0f" } },
+];
 
 export interface ProductColor {
   name: string;
@@ -103,19 +127,25 @@ const generateProducts = (): Product[] => {
       const price = Math.round((minP + Math.random() * (maxP - minP)) / 10) * 10;
       const seasonal = i < 2 ? "eid" : i < 4 ? "winter" : i < 6 ? "summer" : undefined;
       const costPrice = Math.round(price * (0.4 + Math.random() * 0.2));
-      const colors = colorSets[i % colorSets.length].map(c => ({
-        ...c,
-        image: baseImage, // every variant inherits the validated category image
-      }));
+
+      // Shirt category uses the dedicated luxury catalog (one image + matching color per product)
+      const isShirt = cat.slug === "shirt";
+      const shirtItem = isShirt ? shirtCatalog[i] : undefined;
+      const productImage = shirtItem ? shirtItem.image : baseImage;
+      const productTitle = shirtItem ? shirtItem.name : (names[i] || `${cat.name} Item ${i + 1}`);
+      const colors = shirtItem
+        ? [{ name: shirtItem.color.name, code: shirtItem.color.code, image: shirtItem.image }]
+        : colorSets[i % colorSets.length].map(c => ({ ...c, image: baseImage }));
+
       products.push({
         id: `p${id++}`,
-        title: names[i] || `${cat.name} Item ${i + 1}`,
+        title: productTitle,
         price, costPrice,
         category: cat.slug, year: 2024 + (i % 2),
         sizes: sizeSets[i % sizeSets.length],
         stock: Math.floor(Math.random() * 50) + 5,
         description: `Premium quality ${cat.name.toLowerCase()} crafted with the finest materials. Perfect for any occasion with a modern fit and contemporary design.`,
-        image: baseImage,
+        image: productImage,
         colors,
         trending: i < 3, featured: i < 2, seasonal,
       });
