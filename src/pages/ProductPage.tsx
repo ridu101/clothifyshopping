@@ -1,13 +1,14 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { ArrowLeft, ShoppingBag, Heart, Minus, Plus, Check, Zap } from "lucide-react";
+import { ArrowLeft, ShoppingBag, Heart, Minus, Plus, Check, Zap, Ruler } from "lucide-react";
 import { useProducts } from "@/context/ProductContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 import ProductCard from "@/components/ProductCard";
+import SizeGuide from "@/components/SizeGuide";
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
