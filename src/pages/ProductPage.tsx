@@ -64,24 +64,24 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="min-h-screen pt-28 px-6 max-w-7xl mx-auto">
+    <div className="min-h-screen pt-24 md:pt-28 px-4 md:px-6 max-w-7xl mx-auto overflow-x-hidden">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-        <Link to={`/${product.category}`} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300 mb-8">
+        <Link to={`/${product.category}`} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300 mb-6 md:mb-8">
           <ArrowLeft className="w-4 h-4" /> Back
         </Link>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          <div>
-            <div className="glass-card overflow-hidden rounded-3xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-start">
+          <div className="min-w-0">
+            <div className="glass-card overflow-hidden rounded-2xl md:rounded-3xl">
               <div className="aspect-[3/4] overflow-hidden">
                 <motion.img key={displayImage} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}
                   src={displayImage} alt={product.title} className="w-full h-full object-cover" />
               </div>
             </div>
             {colors.length > 0 && (
-              <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+              <div className="flex gap-2 mt-3 md:mt-4 overflow-x-auto pb-2">
                 {colors.map((c, i) => (
                   <button key={i} onClick={() => setSelectedColorIdx(i)}
-                    className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 ${selectedColorIdx === i ? "border-primary shadow-md" : "border-border hover:border-primary/30"}`}>
+                    className={`flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 ${selectedColorIdx === i ? "border-primary shadow-md" : "border-border hover:border-primary/30"}`}>
                     <img src={c.image || product.image} alt={c.name} className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -89,21 +89,21 @@ const ProductPage = () => {
             )}
           </div>
 
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center min-w-0">
             <span className="text-xs font-mono text-primary uppercase tracking-widest mb-2">{product.category}</span>
-            <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground">{product.title}</h1>
-            <p className="price-text text-3xl mt-4">৳{product.price}</p>
+            <h1 className="font-heading text-xl md:text-4xl font-bold text-foreground leading-tight break-words">{product.title}</h1>
+            <p className="price-text text-2xl md:text-3xl mt-3 md:mt-4">৳{product.price}</p>
             <p className="text-sm text-muted-foreground mt-1 font-mono">Year: {product.year}</p>
-            <p className="text-muted-foreground mt-6 leading-relaxed">{product.description}</p>
-            <div className="flex items-center gap-2 mt-6">
-              <Check className="w-4 h-4 text-primary" />
+            <p className="text-sm md:text-base text-muted-foreground mt-4 md:mt-6 leading-relaxed break-words">{product.description}</p>
+            <div className="flex items-center gap-2 mt-5 md:mt-6">
+              <Check className="w-4 h-4 text-primary shrink-0" />
               <span className="text-sm text-primary font-mono">{product.stock} in stock</span>
             </div>
 
             {colors.length > 0 && (
-              <div className="mt-6">
+              <div className="mt-5 md:mt-6">
                 <p className="text-sm font-heading font-semibold mb-3">Color: {colors[selectedColorIdx]?.name}</p>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   {colors.map((c, i) => (
                     <button key={i} onClick={() => setSelectedColorIdx(i)}
                       className={`w-8 h-8 rounded-full border-2 transition-all duration-300 ${selectedColorIdx === i ? "border-primary scale-110 shadow-md" : "border-border hover:scale-105"}`}
@@ -113,13 +113,13 @@ const ProductPage = () => {
               </div>
             )}
 
-            <div className="mt-6">
-              <div className="flex items-center justify-between mb-3">
+            <div className="mt-5 md:mt-6">
+              <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
                 <p className="text-sm font-heading font-semibold">Select Size</p>
                 <button
                   type="button"
                   onClick={() => setSizeGuideOpen(true)}
-                  className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-heading font-semibold text-primary glass-panel border border-primary/30 hover:border-primary/60 transition-all duration-300 hover:shadow-[0_8px_24px_rgba(59,130,246,0.25)] hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-heading font-semibold text-primary glass-panel border border-primary/30 hover:border-primary/60 transition-all duration-300"
                   aria-label="Open size guide"
                 >
                   <Ruler className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform duration-300" />
@@ -129,31 +129,31 @@ const ProductPage = () => {
               <div className="flex gap-2 flex-wrap">
                 {product.sizes.map(s => (
                   <button key={s} onClick={() => setSelectedSize(s)}
-                    className={`px-4 py-2 rounded-xl font-mono text-sm transition-all duration-300 ${selectedSize === s ? "neon-button" : "glass-panel hover:border-primary/30"}`}>{s}</button>
+                    className={`h-10 px-4 rounded-xl font-mono text-xs md:text-sm transition-all duration-300 ${selectedSize === s ? "neon-button" : "glass-panel hover:border-primary/30"}`}>{s}</button>
                 ))}
               </div>
             </div>
 
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-5 md:mt-6 flex items-center gap-3 md:gap-4 flex-wrap">
               <p className="text-sm font-heading font-semibold">Quantity</p>
-              <div className="flex items-center gap-3 glass-panel rounded-xl px-3 py-1">
+              <div className="flex items-center gap-2 glass-panel rounded-xl px-3 py-1 h-10">
                 <button onClick={() => setQty(Math.max(1, qty - 1))} className="p-1 hover:text-primary transition-colors duration-300"><Minus className="w-4 h-4" /></button>
-                <span className="font-mono w-8 text-center">{qty}</span>
+                <span className="font-mono w-8 text-center text-sm">{qty}</span>
                 <button onClick={() => setQty(qty + 1)} className="p-1 hover:text-primary transition-colors duration-300"><Plus className="w-4 h-4" /></button>
               </div>
             </div>
 
             {!isAdmin && (
-              <div className="mt-8 flex gap-3">
-                <button onClick={handleAddToCart} className="neon-button-outline flex-1 py-3.5 flex items-center justify-center gap-2 text-base">
-                  <ShoppingBag className="w-5 h-5" /> Add To Cart
+              <div className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-3 items-stretch">
+                <button onClick={handleAddToCart} className="neon-button-outline h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden">
+                  <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" /> Add To Cart
                 </button>
-                <button onClick={handleBuyNow} className="neon-button flex-1 py-3.5 flex items-center justify-center gap-2 text-base">
-                  <Zap className="w-5 h-5" /> Buy Now
+                <button onClick={handleBuyNow} className="neon-button h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden">
+                  <Zap className="w-4 h-4 md:w-5 md:h-5" /> Buy Now
                 </button>
                 <button onClick={handleWishlist}
-                  className={`glass-panel rounded-xl px-4 transition-colors duration-300 ${wishlisted ? "bg-primary/10 text-primary border-primary/30" : "hover:bg-primary/5"}`}>
-                  <Heart className={`w-5 h-5 ${wishlisted ? "fill-primary" : ""}`} />
+                  className={`glass-panel h-10 md:h-14 rounded-xl md:rounded-2xl px-4 transition-colors duration-300 ${wishlisted ? "bg-primary/10 text-primary border-primary/30" : "hover:bg-primary/5"}`}>
+                  <Heart className={`w-4 h-4 md:w-5 md:h-5 ${wishlisted ? "fill-primary" : ""}`} />
                 </button>
               </div>
             )}
