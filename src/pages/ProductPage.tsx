@@ -1,13 +1,14 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { ArrowLeft, ShoppingBag, Heart, Minus, Plus, Check, Zap } from "lucide-react";
+import { ArrowLeft, ShoppingBag, Heart, Minus, Plus, Check, Zap, Ruler } from "lucide-react";
 import { useProducts } from "@/context/ProductContext";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 import ProductCard from "@/components/ProductCard";
+import SizeGuide from "@/components/SizeGuide";
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +21,7 @@ const ProductPage = () => {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [qty, setQty] = useState(1);
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
 
   // Scroll to top on product change
   useEffect(() => {
@@ -112,8 +114,19 @@ const ProductPage = () => {
             )}
 
             <div className="mt-6">
-              <p className="text-sm font-heading font-semibold mb-3">Select Size</p>
-              <div className="flex gap-2">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-heading font-semibold">Select Size</p>
+                <button
+                  type="button"
+                  onClick={() => setSizeGuideOpen(true)}
+                  className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-heading font-semibold text-primary glass-panel border border-primary/30 hover:border-primary/60 transition-all duration-300 hover:shadow-[0_8px_24px_rgba(59,130,246,0.25)] hover:-translate-y-0.5"
+                  aria-label="Open size guide"
+                >
+                  <Ruler className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform duration-300" />
+                  Size Guide
+                </button>
+              </div>
+              <div className="flex gap-2 flex-wrap">
                 {product.sizes.map(s => (
                   <button key={s} onClick={() => setSelectedSize(s)}
                     className={`px-4 py-2 rounded-xl font-mono text-sm transition-all duration-300 ${selectedSize === s ? "neon-button" : "glass-panel hover:border-primary/30"}`}>{s}</button>
@@ -156,6 +169,7 @@ const ProductPage = () => {
           </div>
         )}
       </motion.div>
+      <SizeGuide open={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} category={product.category} />
     </div>
   );
 };
