@@ -196,13 +196,18 @@ const generateProducts = (): Product[] => {
       const seasonal = i < 2 ? "eid" : i < 4 ? "winter" : i < 6 ? "summer" : undefined;
       const costPrice = Math.round(price * (0.4 + Math.random() * 0.2));
 
-      // Shirt category uses the dedicated luxury catalog (one image + matching color per product)
-      const isShirt = cat.slug === "shirt";
-      const shirtItem = isShirt ? shirtCatalog[i] : undefined;
-      const productImage = shirtItem ? shirtItem.image : baseImage;
-      const productTitle = shirtItem ? shirtItem.name : (names[i] || `${cat.name} Item ${i + 1}`);
-      const colors = shirtItem
-        ? [{ name: shirtItem.color.name, code: shirtItem.color.code, image: shirtItem.image }]
+      const premiumCatalogMap: Partial<Record<string, { name: string; image: string; color: { name: string; code: string } }[]>> = {
+        shirt: shirtCatalog,
+        tshirt: tshirtCatalog,
+        panjabi: panjabiCatalog,
+        polo: poloCatalog,
+      };
+
+      const premiumItem = premiumCatalogMap[cat.slug]?.[i];
+      const productImage = premiumItem ? premiumItem.image : baseImage;
+      const productTitle = premiumItem ? premiumItem.name : (names[i] || `${cat.name} Item ${i + 1}`);
+      const colors = premiumItem
+        ? [{ name: premiumItem.color.name, code: premiumItem.color.code, image: premiumItem.image }]
         : colorSets[i % colorSets.length].map(c => ({ ...c, image: baseImage }));
 
       products.push({
