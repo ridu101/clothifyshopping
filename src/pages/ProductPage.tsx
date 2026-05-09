@@ -169,6 +169,7 @@ const ProductPage = () => {
           </div>
         )}
       </motion.div>
+      <SizeGuide open={sizeGuideOpen} onClose={() => setSizeGuideOpen(false)} category={product.category} />
     </div>
   );
 };
