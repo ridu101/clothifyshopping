@@ -78,10 +78,10 @@ const Index = () => {
         </div>
       </section>
 
-      {savedSeason && seasonalProducts.length > 0 && (
+      {activeSeason && seasonalProducts.length > 0 && (
         <section className="px-4 md:px-6 py-12 md:py-16 max-w-7xl mx-auto">
           <motion.div {...sectionAnim}>
-            <SectionHeader title={seasonLabels[savedSeason] || "Seasonal Collection"} subtitle="Curated picks for the season" link="/shop" />
+            <SectionHeader title={seasonLabels[activeSeason] || "Seasonal Collection"} subtitle="Curated picks for the season" link="/shop" />
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {seasonalProducts.slice(0, 8).map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
             </div>
