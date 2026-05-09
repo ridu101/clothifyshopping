@@ -127,19 +127,25 @@ const generateProducts = (): Product[] => {
       const price = Math.round((minP + Math.random() * (maxP - minP)) / 10) * 10;
       const seasonal = i < 2 ? "eid" : i < 4 ? "winter" : i < 6 ? "summer" : undefined;
       const costPrice = Math.round(price * (0.4 + Math.random() * 0.2));
-      const colors = colorSets[i % colorSets.length].map(c => ({
-        ...c,
-        image: baseImage, // every variant inherits the validated category image
-      }));
+
+      // Shirt category uses the dedicated luxury catalog (one image + matching color per product)
+      const isShirt = cat.slug === "shirt";
+      const shirtItem = isShirt ? shirtCatalog[i] : undefined;
+      const productImage = shirtItem ? shirtItem.image : baseImage;
+      const productTitle = shirtItem ? shirtItem.name : (names[i] || `${cat.name} Item ${i + 1}`);
+      const colors = shirtItem
+        ? [{ name: shirtItem.color.name, code: shirtItem.color.code, image: shirtItem.image }]
+        : colorSets[i % colorSets.length].map(c => ({ ...c, image: baseImage }));
+
       products.push({
         id: `p${id++}`,
-        title: names[i] || `${cat.name} Item ${i + 1}`,
+        title: productTitle,
         price, costPrice,
         category: cat.slug, year: 2024 + (i % 2),
         sizes: sizeSets[i % sizeSets.length],
         stock: Math.floor(Math.random() * 50) + 5,
         description: `Premium quality ${cat.name.toLowerCase()} crafted with the finest materials. Perfect for any occasion with a modern fit and contemporary design.`,
-        image: baseImage,
+        image: productImage,
         colors,
         trending: i < 3, featured: i < 2, seasonal,
       });
