@@ -9,8 +9,37 @@ import shirtBeige from "@/assets/shirt-beige.jpg";
 import shirtDarkgrey from "@/assets/shirt-darkgrey.jpg";
 import shirtBottlegreen from "@/assets/shirt-bottlegreen.jpg";
 import shirtBrown from "@/assets/shirt-brown.jpg";
+import tshirtBlack from "@/assets/tshirt-black.jpg";
+import tshirtWhite from "@/assets/tshirt-white.jpg";
+import tshirtOffwhite from "@/assets/tshirt-offwhite.jpg";
+import tshirtNavy from "@/assets/tshirt-navy.jpg";
+import tshirtSkyblue from "@/assets/tshirt-skyblue.jpg";
+import tshirtOlive from "@/assets/tshirt-olive.jpg";
+import tshirtBeige from "@/assets/tshirt-beige.jpg";
+import tshirtDarkgrey from "@/assets/tshirt-darkgrey.jpg";
+import tshirtBrown from "@/assets/tshirt-brown.jpg";
+import tshirtBottlegreen from "@/assets/tshirt-bottlegreen.jpg";
+import panjabiOffwhite from "@/assets/panjabi-offwhite.jpg";
+import panjabiBlack from "@/assets/panjabi-black.jpg";
+import panjabiNavy from "@/assets/panjabi-navy.jpg";
+import panjabiMaroon from "@/assets/panjabi-maroon.jpg";
+import panjabiOlive from "@/assets/panjabi-olive.jpg";
+import panjabiBeige from "@/assets/panjabi-beige.jpg";
+import panjabiBrown from "@/assets/panjabi-brown.jpg";
+import panjabiDarkgrey from "@/assets/panjabi-darkgrey.jpg";
+import panjabiBottlegreen from "@/assets/panjabi-bottlegreen.jpg";
+import panjabiSkyblue from "@/assets/panjabi-skyblue.jpg";
+import poloBlack from "@/assets/polo-black.jpg";
+import poloWhite from "@/assets/polo-white.jpg";
+import poloNavy from "@/assets/polo-navy.jpg";
+import poloSkyblue from "@/assets/polo-skyblue.jpg";
+import poloOlive from "@/assets/polo-olive.jpg";
+import poloMaroon from "@/assets/polo-maroon.jpg";
+import poloBeige from "@/assets/polo-beige.jpg";
+import poloDarkgrey from "@/assets/polo-darkgrey.jpg";
+import poloBottlegreen from "@/assets/polo-bottlegreen.jpg";
+import poloBrown from "@/assets/polo-brown.jpg";
 
-// Premium luxury shirt catalog — same model, only color changes
 const shirtCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
   { name: "Onyx Black Premium Shirt", image: shirtBlack, color: { name: "Black", code: "#1a1a1a" } },
   { name: "Pearl White Premium Shirt", image: shirtWhite, color: { name: "White", code: "#f8f9fa" } },
@@ -22,6 +51,45 @@ const shirtCatalog: { name: string; image: string; color: { name: string; code: 
   { name: "Charcoal Grey Premium Shirt", image: shirtDarkgrey, color: { name: "Dark Grey", code: "#3a3a3a" } },
   { name: "Bottle Green Premium Shirt", image: shirtBottlegreen, color: { name: "Bottle Green", code: "#0b3d2e" } },
   { name: "Chocolate Brown Premium Shirt", image: shirtBrown, color: { name: "Chocolate Brown", code: "#3e1f0f" } },
+];
+
+const tshirtCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
+  { name: "Onyx Black Oversized T-Shirt", image: tshirtBlack, color: { name: "Black", code: "#1a1a1a" } },
+  { name: "Pure White Oversized T-Shirt", image: tshirtWhite, color: { name: "White", code: "#f8f9fa" } },
+  { name: "Off White Oversized T-Shirt", image: tshirtOffwhite, color: { name: "Off White", code: "#f2eedf" } },
+  { name: "Navy Blue Oversized T-Shirt", image: tshirtNavy, color: { name: "Navy Blue", code: "#0f2347" } },
+  { name: "Sky Blue Oversized T-Shirt", image: tshirtSkyblue, color: { name: "Sky Blue", code: "#9ecff0" } },
+  { name: "Olive Green Oversized T-Shirt", image: tshirtOlive, color: { name: "Olive Green", code: "#556b2f" } },
+  { name: "Beige Oversized T-Shirt", image: tshirtBeige, color: { name: "Beige", code: "#c9ab83" } },
+  { name: "Dark Grey Oversized T-Shirt", image: tshirtDarkgrey, color: { name: "Dark Grey", code: "#4a4a4a" } },
+  { name: "Chocolate Brown Oversized T-Shirt", image: tshirtBrown, color: { name: "Chocolate Brown", code: "#4a2a1b" } },
+  { name: "Bottle Green Oversized T-Shirt", image: tshirtBottlegreen, color: { name: "Bottle Green", code: "#0b4a3f" } },
+];
+
+const panjabiCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
+  { name: "Eid Off White Premium Panjabi", image: panjabiOffwhite, color: { name: "Off White", code: "#f3ead8" } },
+  { name: "Eid Black Premium Panjabi", image: panjabiBlack, color: { name: "Black", code: "#181818" } },
+  { name: "Eid Navy Blue Premium Panjabi", image: panjabiNavy, color: { name: "Navy Blue", code: "#132a57" } },
+  { name: "Eid Maroon Premium Panjabi", image: panjabiMaroon, color: { name: "Maroon", code: "#6f1d2b" } },
+  { name: "Eid Olive Green Premium Panjabi", image: panjabiOlive, color: { name: "Olive Green", code: "#6d7d33" } },
+  { name: "Eid Beige Premium Panjabi", image: panjabiBeige, color: { name: "Beige", code: "#c9aa7a" } },
+  { name: "Eid Chocolate Brown Premium Panjabi", image: panjabiBrown, color: { name: "Chocolate Brown", code: "#5a3421" } },
+  { name: "Eid Dark Grey Premium Panjabi", image: panjabiDarkgrey, color: { name: "Dark Grey", code: "#575757" } },
+  { name: "Eid Bottle Green Premium Panjabi", image: panjabiBottlegreen, color: { name: "Bottle Green", code: "#0b4a3a" } },
+  { name: "Eid Sky Blue Premium Panjabi", image: panjabiSkyblue, color: { name: "Sky Blue", code: "#a9d7f3" } },
+];
+
+const poloCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
+  { name: "Black Luxury Polo Shirt", image: poloBlack, color: { name: "Black", code: "#111111" } },
+  { name: "White Luxury Polo Shirt", image: poloWhite, color: { name: "White", code: "#f8f9fa" } },
+  { name: "Navy Blue Luxury Polo Shirt", image: poloNavy, color: { name: "Navy Blue", code: "#10284d" } },
+  { name: "Sky Blue Luxury Polo Shirt", image: poloSkyblue, color: { name: "Sky Blue", code: "#add8f0" } },
+  { name: "Olive Green Luxury Polo Shirt", image: poloOlive, color: { name: "Olive Green", code: "#708238" } },
+  { name: "Maroon Luxury Polo Shirt", image: poloMaroon, color: { name: "Maroon", code: "#7a1f33" } },
+  { name: "Beige Luxury Polo Shirt", image: poloBeige, color: { name: "Beige", code: "#ceb084" } },
+  { name: "Dark Grey Luxury Polo Shirt", image: poloDarkgrey, color: { name: "Dark Grey", code: "#4a4f55" } },
+  { name: "Bottle Green Luxury Polo Shirt", image: poloBottlegreen, color: { name: "Bottle Green", code: "#0f5a45" } },
+  { name: "Chocolate Brown Luxury Polo Shirt", image: poloBrown, color: { name: "Chocolate Brown", code: "#5b3728" } },
 ];
 
 export interface ProductColor {
