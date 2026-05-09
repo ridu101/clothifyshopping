@@ -14,20 +14,41 @@ const ResetPasswordPage = () => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Check for recovery token in URL hash
-    const hash = window.location.hash;
-    if (hash.includes("type=recovery") || hash.includes("access_token")) {
+    // Supabase parses recovery tokens from the URL hash asynchronously and
+    // emits a PASSWORD_RECOVERY event. We listen first, then check session,
+    // and finally fall back to the hash so the page never redirects too early.
+    let resolved = false;
+    const markReady = () => {
+      if (resolved) return;
+      resolved = true;
       setReady(true);
-    } else {
-      // Also check if we have a session (user clicked the link)
-      supabase.auth.getSession().then(({ data }) => {
-        if (data.session) setReady(true);
-        else {
-          toast.error("Invalid or expired reset link.");
-          navigate("/login");
-        }
-      });
-    }
+    };
+
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
+        markReady();
+      }
+    });
+
+    const hash = window.location.hash || "";
+    const hasRecoveryHash = hash.includes("type=recovery") || hash.includes("access_token");
+    if (hasRecoveryHash) markReady();
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) markReady();
+    });
+
+    // Give Supabase ~2s to process the hash before giving up.
+    const timer = window.setTimeout(() => {
+      if (resolved) return;
+      toast.error("Invalid or expired reset link. Please request a new one.");
+      navigate("/forgot-password", { replace: true });
+    }, 2000);
+
+    return () => {
+      sub.subscription.unsubscribe();
+      window.clearTimeout(timer);
+    };
   }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
