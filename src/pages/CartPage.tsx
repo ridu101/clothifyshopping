@@ -81,6 +81,7 @@ const CartPage = () => {
     });
     setSubmitting(false);
     if (order) {
+      decrementStock(items.map(i => ({ id: i.product.id, quantity: i.quantity })));
       setShowOrderForm(false);
       setShowSuccess(true);
       clearCart();
