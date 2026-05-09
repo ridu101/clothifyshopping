@@ -92,14 +92,19 @@ const AdminDashboard = () => {
           <h2 className="font-heading text-lg font-bold text-foreground">Seasonal Collection</h2>
         </div>
         <p className="text-sm text-muted-foreground mb-4">Select a season to feature on the homepage. Click again to deselect.</p>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {seasons.map(s => (
             <button key={s.value} onClick={() => handleSeasonChange(s.value)}
-              className={`px-5 py-2.5 rounded-xl text-sm font-heading font-semibold transition-all duration-300 ${selectedSeason === s.value ? "neon-button" : "glass-panel hover:bg-primary/5"}`}>
-              {s.label}
+              className={`px-5 py-2.5 rounded-xl text-sm font-heading font-semibold transition-all duration-300 ${activeSeason === s.value ? "neon-button" : "glass-panel hover:bg-primary/5"}`}>
+              {s.label} {activeSeason === s.value && "● Active"}
             </button>
           ))}
         </div>
+        {activeSeason && (
+          <p className="text-xs text-primary mt-3 font-mono">
+            Live preview: Homepage now shows the {activeSeason} collection.
+          </p>
+        )}
       </motion.div>
     </div>
   );
