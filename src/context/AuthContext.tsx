@@ -328,29 +328,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loginWithGoogle = useCallback(async () => {
     try {
       const origin = window.location.origin;
-      console.log("[AUTH] OAuth start", { provider: "google", origin });
-      const { lovable } = await import("@/integrations/lovable");
-      const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: `${origin}/`,
-      });
+      const isLovableHost = /\.lovable\.(app|dev)$/.test(window.location.hostname);
+      console.log("[AUTH] OAuth start", { provider: "google", origin, isLovableHost });
 
-      console.log("[AUTH] OAuth result:", { redirected: result?.redirected, error: result?.error?.message });
-
-      if (result.error) {
-        toast.error(getFriendlyAuthError(result.error.message));
+      // On Lovable hosts use the managed OAuth broker (/~oauth proxy).
+      // On Vercel / custom hosts that proxy doesn't exist — use Supabase OAuth directly.
+      if (isLovableHost) {
+        const { lovable } = await import("@/integrations/lovable");
+        const result = await lovable.auth.signInWithOAuth("google", {
+          redirect_uri: `${origin}/`,
+        });
+        console.log("[AUTH] OAuth result:", { redirected: result?.redirected, error: result?.error?.message });
+        if (result.error) {
+          toast.error(getFriendlyAuthError(result.error.message));
+          return;
+        }
+        if (result.redirected) return;
+        const { data } = await supabase.auth.getSession();
+        if (data.session?.user) {
+          const mapped = await syncAuthenticatedUser(data.session.user);
+          toast.success("Welcome!");
+          window.location.href = mapped.role === "admin" ? "/admin-dashboard" : "/";
+        }
         return;
       }
 
-      if (result.redirected) return;
-
-      // Tokens already set — force session refresh
-      const { data } = await supabase.auth.getSession();
-      if (data.session?.user) {
-        const mapped = await syncAuthenticatedUser(data.session.user);
-        toast.success("Welcome!");
-        const target = mapped.role === "admin" ? "/admin-dashboard" : "/";
-        window.location.href = target;
+      // Vercel / production / custom domain → native Supabase OAuth
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${origin}/`,
+          queryParams: { prompt: "select_account" },
+        },
+      });
+      if (error) {
+        console.error("[AUTH] Supabase OAuth error:", error.message);
+        toast.error(getFriendlyAuthError(error.message));
       }
+      // Browser redirects to Google — onAuthStateChange handles the rest on return.
     } catch (err: any) {
       console.error("[AUTH] Google login exception:", err);
       toast.error("Google login failed. Please try again.");
