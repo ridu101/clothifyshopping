@@ -5,6 +5,8 @@ import { Package, ShoppingCart, BarChart3, RotateCcw, LogOut, Leaf } from "lucid
 import { useAuth } from "@/context/AuthContext";
 import { useOrders } from "@/context/OrderContext";
 import { useProducts } from "@/context/ProductContext";
+import { useReturns } from "@/context/ReturnContext";
+import { useSettings } from "@/context/SettingsContext";
 import { toast } from "sonner";
 
 const seasons = [
