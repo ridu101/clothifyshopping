@@ -18,13 +18,13 @@ const features = [
 
 const Index = () => {
   const { getTrendingProducts, getFeaturedProducts, getSeasonalProducts, products } = useProducts();
+  const { activeSeason } = useSettings();
   const trending = getTrendingProducts().slice(0, 8);
   const featured = getFeaturedProducts().slice(0, 8);
   const latestProducts = products.slice(0, 6);
 
   // Show only the selected seasonal collection if one is active
-  const savedSeason = localStorage.getItem("clothify_season");
-  const seasonalProducts = savedSeason ? getSeasonalProducts(savedSeason) : [];
+  const seasonalProducts = activeSeason ? getSeasonalProducts(activeSeason) : [];
   const seasonLabels: Record<string, string> = { eid: "🌙 Eid Collection", winter: "❄️ Winter Collection", summer: "☀️ Summer Collection" };
 
   const [email, setEmail] = useState("");
