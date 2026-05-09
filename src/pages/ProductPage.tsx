@@ -96,8 +96,10 @@ const ProductPage = () => {
             <p className="text-sm text-muted-foreground mt-1 font-mono">Year: {product.year}</p>
             <p className="text-sm md:text-base text-muted-foreground mt-4 md:mt-6 leading-relaxed break-words">{product.description}</p>
             <div className="flex items-center gap-2 mt-5 md:mt-6">
-              <Check className="w-4 h-4 text-primary shrink-0" />
-              <span className="text-sm text-primary font-mono">{product.stock} in stock</span>
+              <Check className={`w-4 h-4 shrink-0 ${product.stock > 0 ? "text-primary" : "text-destructive"}`} />
+              <span className={`text-sm font-mono ${product.stock > 0 ? "text-primary" : "text-destructive"}`}>
+                {product.stock > 0 ? `${product.stock} in stock` : "Out of Stock"}
+              </span>
             </div>
 
             {colors.length > 0 && (
@@ -145,11 +147,13 @@ const ProductPage = () => {
 
             {!isAdmin && (
               <div className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-3 items-stretch">
-                <button onClick={handleAddToCart} className="neon-button-outline h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden">
-                  <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" /> Add To Cart
+                <button onClick={handleAddToCart} disabled={product.stock <= 0}
+                  className="neon-button-outline h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                  <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" /> {product.stock <= 0 ? "Out of Stock" : "Add To Cart"}
                 </button>
-                <button onClick={handleBuyNow} className="neon-button h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden">
-                  <Zap className="w-4 h-4 md:w-5 md:h-5" /> Buy Now
+                <button onClick={handleBuyNow} disabled={product.stock <= 0}
+                  className="neon-button h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed">
+                  <Zap className="w-4 h-4 md:w-5 md:h-5" /> {product.stock <= 0 ? "Unavailable" : "Buy Now"}
                 </button>
                 <button onClick={handleWishlist}
                   className={`glass-panel h-10 md:h-14 rounded-xl md:rounded-2xl px-4 flex items-center justify-center gap-2 text-xs md:text-sm transition-colors duration-300 ${wishlisted ? "bg-primary/10 text-primary border-primary/30" : "hover:bg-primary/5"}`}>
