@@ -197,13 +197,13 @@ type CatalogItem = {
 };
 
 export const categories: Category[] = [
-  { slug: "panjabi", name: "Panjabi", image: defaultCategoryImages.panjabi },
-  { slug: "shirt", name: "Shirt", image: defaultCategoryImages.shirt },
-  { slug: "pant", name: "Pant", image: defaultCategoryImages.pant },
-  { slug: "tshirt", name: "T-Shirt", image: defaultCategoryImages.tshirt },
-  { slug: "polo", name: "Polo Shirt", image: defaultCategoryImages.polo },
-  { slug: "hoodie", name: "Hoodie", image: defaultCategoryImages.hoodie },
-  { slug: "jacket", name: "Winter Jacket", image: defaultCategoryImages.jacket },
+  { slug: "panjabi", name: "Panjabi", image: panjabiCatalog[0]?.image ?? defaultCategoryImages.panjabi },
+  { slug: "shirt", name: "Shirt", image: shirtCatalog[0]?.image ?? defaultCategoryImages.shirt },
+  { slug: "pant", name: "Pant", image: pantCatalog[0]?.image ?? defaultCategoryImages.pant },
+  { slug: "tshirt", name: "T-Shirt", image: tshirtCatalog[0]?.image ?? defaultCategoryImages.tshirt },
+  { slug: "polo", name: "Polo Shirt", image: poloCatalog[0]?.image ?? defaultCategoryImages.polo },
+  { slug: "hoodie", name: "Hoodie", image: hoodieCatalog[0]?.image ?? defaultCategoryImages.hoodie },
+  { slug: "jacket", name: "Winter Jacket", image: jacketCatalog[0]?.image ?? defaultCategoryImages.jacket },
 ];
 
 const colorSets: ProductColor[][] = [
