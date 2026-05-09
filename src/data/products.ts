@@ -158,12 +158,12 @@ const generateProducts = (): Product[] => {
   const sizeSets = [["S", "M", "L", "XL"], ["M", "L", "XL", "XXL"], ["S", "M", "L"]];
 
   const namesByCategory: Record<string, string[]> = {
-    panjabi: ["Royal Silk Panjabi", "Premium Cotton Panjabi", "Embroidered Panjabi", "Classic White Panjabi", "Navy Blue Panjabi", "Festive Gold Panjabi", "Slim Fit Panjabi", "Designer Panjabi", "Traditional Panjabi", "Modern Cut Panjabi"],
+    panjabi: panjabiCatalog.map((item) => item.name),
     shirt: ["Oxford Button Down", "Slim Fit Formal", "Linen Casual Shirt", "Denim Shirt", "Printed Casual Shirt", "White Classic Shirt", "Striped Office Shirt", "Mandarin Collar Shirt", "Flannel Check Shirt", "Satin Evening Shirt"],
     pant: ["Slim Fit Chinos", "Classic Formal Trouser", "Jogger Pants", "Cargo Pants", "Skinny Jeans", "Straight Cut Denim", "Linen Trousers", "Track Pants", "Pleated Pants", "Tapered Fit Pants"],
     katua: ["Premium Katua Set", "Casual Katua", "Festive Katua", "Embroidered Katua", "Cotton Katua", "Designer Katua", "Traditional Katua", "Modern Katua", "Silk Blend Katua", "Printed Katua"],
-    tshirt: ["Graphic Tee", "Plain Round Neck", "V-Neck Essential", "Oversized Tee", "Striped T-Shirt", "Vintage Wash Tee", "Athletic Fit Tee", "Pocket T-Shirt", "Henley T-Shirt", "Longline Tee"],
-    polo: ["Classic Polo", "Sporty Polo", "Premium Pique Polo", "Contrast Collar Polo", "Slim Fit Polo", "Striped Polo", "Textured Polo", "Performance Polo", "Tipped Polo", "Jersey Polo"],
+    tshirt: tshirtCatalog.map((item) => item.name),
+    polo: poloCatalog.map((item) => item.name),
     hoodie: ["Pullover Hoodie", "Zip-Up Hoodie", "Oversized Hoodie", "Fleece Hoodie", "Graphic Hoodie", "Tech Hoodie", "Cropped Hoodie", "Essential Hoodie", "Acid Wash Hoodie", "Embroidered Hoodie"],
     jacket: ["Puffer Jacket", "Bomber Jacket", "Windbreaker", "Quilted Jacket", "Leather Jacket", "Denim Jacket", "Parka Coat", "Fleece Jacket", "Down Jacket", "Utility Jacket"],
   };
