@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Package, ShoppingCart, BarChart3, RotateCcw, LogOut, Leaf } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useOrders } from "@/context/OrderContext";
 import { useProducts } from "@/context/ProductContext";
+import { useReturns } from "@/context/ReturnContext";
+import { useSettings } from "@/context/SettingsContext";
 import { toast } from "sonner";
 
 const seasons = [
@@ -25,7 +27,8 @@ const AdminDashboard = () => {
   const { user, isAdmin, logout } = useAuth();
   const { orders } = useOrders();
   const { products } = useProducts();
-  const [selectedSeason, setSelectedSeason] = useState(() => localStorage.getItem("clothify_season") || "");
+  const { returns } = useReturns();
+  const { activeSeason, setActiveSeason } = useSettings();
 
   useEffect(() => {
     if (!isAdmin) navigate("/login");
@@ -33,23 +36,23 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => { await logout(); navigate("/login"); };
 
-  const handleSeasonChange = (season: string) => {
-    if (selectedSeason === season) {
-      setSelectedSeason("");
-      localStorage.removeItem("clothify_season");
+  const handleSeasonChange = async (season: string) => {
+    if (activeSeason === season) {
+      await setActiveSeason("");
       toast.success("Seasonal collection cleared");
     } else {
-      setSelectedSeason(season);
-      localStorage.setItem("clothify_season", season);
+      await setActiveSeason(season);
       toast.success(`${season.charAt(0).toUpperCase() + season.slice(1)} collection activated`);
     }
   };
+
+  const activeReturns = returns.filter(r => !["approved_refund", "exchange_sent", "rejected"].includes(r.status));
 
   const counts: Record<string, number | string> = {
     Orders: orders.length,
     Products: products.length,
     Sells: `৳${orders.filter(o => o.status === "delivered").reduce((s, o) => s + o.totalPrice, 0)}`,
-    "Return Orders": orders.filter(o => o.returnStatus).length,
+    "Return Orders": activeReturns.length,
   };
 
   return (
@@ -89,14 +92,19 @@ const AdminDashboard = () => {
           <h2 className="font-heading text-lg font-bold text-foreground">Seasonal Collection</h2>
         </div>
         <p className="text-sm text-muted-foreground mb-4">Select a season to feature on the homepage. Click again to deselect.</p>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {seasons.map(s => (
             <button key={s.value} onClick={() => handleSeasonChange(s.value)}
-              className={`px-5 py-2.5 rounded-xl text-sm font-heading font-semibold transition-all duration-300 ${selectedSeason === s.value ? "neon-button" : "glass-panel hover:bg-primary/5"}`}>
-              {s.label}
+              className={`px-5 py-2.5 rounded-xl text-sm font-heading font-semibold transition-all duration-300 ${activeSeason === s.value ? "neon-button" : "glass-panel hover:bg-primary/5"}`}>
+              {s.label} {activeSeason === s.value && "● Active"}
             </button>
           ))}
         </div>
+        {activeSeason && (
+          <p className="text-xs text-primary mt-3 font-mono">
+            Live preview: Homepage now shows the {activeSeason} collection.
+          </p>
+        )}
       </motion.div>
     </div>
   );

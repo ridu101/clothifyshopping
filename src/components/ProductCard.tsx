@@ -14,7 +14,12 @@ const ProductCard = ({ product, index = 0 }: { product: Product; index?: number 
       <Link to={`/product/${product.id}`} className="block group"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
         <div className="relative rounded-2xl overflow-hidden glass-panel transition-all duration-300 group-hover:shadow-[0_15px_40px_rgba(0,120,255,0.12)] group-hover:-translate-y-1 md:group-hover:-translate-y-2">
-          {product.trending && (
+          {product.stock <= 0 && (
+            <div className="absolute top-2 right-2 md:top-3 md:right-3 z-20 px-2 py-1 md:px-2.5 rounded-full bg-destructive/15 backdrop-blur-md border border-destructive/30 text-destructive">
+              <span className="text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-wider">Out of Stock</span>
+            </div>
+          )}
+          {product.trending && product.stock > 0 && (
             <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 flex items-center gap-1 px-2 py-1 md:px-2.5 rounded-full bg-primary/10 backdrop-blur-md border border-primary/20 text-primary">
               <Zap className="w-3 h-3 fill-primary" />
               <span className="text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-wider">Trending</span>

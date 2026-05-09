@@ -7,6 +7,7 @@ import HeroCarousel from "@/components/HeroCarousel";
 import { categories } from "@/data/products";
 import { useProducts } from "@/context/ProductContext";
 import { toast } from "sonner";
+import { useSettings } from "@/context/SettingsContext";
 
 const features = [
   { icon: Truck, title: "Free Delivery", desc: "On orders over ৳2000" },
@@ -17,13 +18,13 @@ const features = [
 
 const Index = () => {
   const { getTrendingProducts, getFeaturedProducts, getSeasonalProducts, products } = useProducts();
+  const { activeSeason } = useSettings();
   const trending = getTrendingProducts().slice(0, 8);
   const featured = getFeaturedProducts().slice(0, 8);
   const latestProducts = products.slice(0, 6);
 
   // Show only the selected seasonal collection if one is active
-  const savedSeason = localStorage.getItem("clothify_season");
-  const seasonalProducts = savedSeason ? getSeasonalProducts(savedSeason) : [];
+  const seasonalProducts = activeSeason ? getSeasonalProducts(activeSeason) : [];
   const seasonLabels: Record<string, string> = { eid: "🌙 Eid Collection", winter: "❄️ Winter Collection", summer: "☀️ Summer Collection" };
 
   const [email, setEmail] = useState("");
@@ -77,10 +78,10 @@ const Index = () => {
         </div>
       </section>
 
-      {savedSeason && seasonalProducts.length > 0 && (
+      {activeSeason && seasonalProducts.length > 0 && (
         <section className="px-4 md:px-6 py-12 md:py-16 max-w-7xl mx-auto">
           <motion.div {...sectionAnim}>
-            <SectionHeader title={seasonLabels[savedSeason] || "Seasonal Collection"} subtitle="Curated picks for the season" link="/shop" />
+            <SectionHeader title={seasonLabels[activeSeason] || "Seasonal Collection"} subtitle="Curated picks for the season" link="/shop" />
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {seasonalProducts.slice(0, 8).map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
             </div>

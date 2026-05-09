@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useOrders } from "@/context/OrderContext";
+import { useProducts } from "@/context/ProductContext";
 import { Minus, Plus, Trash2, ArrowLeft, CheckCircle, X, Wallet, CreditCard } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -12,6 +13,7 @@ const CartPage = () => {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
   const { user, isLoggedIn, requireAuth } = useAuth();
   const { placeOrder } = useOrders();
+  const { decrementStock } = useProducts();
   const navigate = useNavigate();
   const [deliveryLocation, setDeliveryLocation] = useState<"dhaka" | "outside">("dhaka");
   const [paymentMethod, setPaymentMethod] = useState<"cod" | "sslcommerz">("cod");
@@ -79,6 +81,7 @@ const CartPage = () => {
     });
     setSubmitting(false);
     if (order) {
+      decrementStock(items.map(i => ({ id: i.product.id, quantity: i.quantity })));
       setShowOrderForm(false);
       setShowSuccess(true);
       clearCart();

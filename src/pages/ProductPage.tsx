@@ -146,20 +146,33 @@ const ProductPage = () => {
             </div>
 
             {!isAdmin && (
-              <div className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-3 items-stretch">
-                <button onClick={handleAddToCart} disabled={product.stock <= 0}
-                  className="neon-button-outline h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed">
-                  <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" /> {product.stock <= 0 ? "Out of Stock" : "Add To Cart"}
-                </button>
-                <button onClick={handleBuyNow} disabled={product.stock <= 0}
-                  className="neon-button h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed">
-                  <Zap className="w-4 h-4 md:w-5 md:h-5" /> {product.stock <= 0 ? "Unavailable" : "Buy Now"}
-                </button>
-                <button onClick={handleWishlist}
-                  className={`glass-panel h-10 md:h-14 rounded-xl md:rounded-2xl px-4 flex items-center justify-center gap-2 text-xs md:text-sm transition-colors duration-300 ${wishlisted ? "bg-primary/10 text-primary border-primary/30" : "hover:bg-primary/5"}`}>
-                  <Heart className={`w-4 h-4 md:w-5 md:h-5 ${wishlisted ? "fill-primary" : ""}`} />
-                  <span className="md:hidden">{wishlisted ? "Wishlisted" : "Wishlist"}</span>
-                </button>
+              <div className="mt-6 md:mt-8">
+                {product.stock > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
+                    <button onClick={handleAddToCart}
+                      className="neon-button-outline h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden">
+                      <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" /> Add To Cart
+                    </button>
+                    <button onClick={handleBuyNow}
+                      className="neon-button h-10 md:h-14 px-4 md:px-8 flex items-center justify-center gap-2 text-xs md:text-sm rounded-xl md:rounded-2xl overflow-hidden">
+                      <Zap className="w-4 h-4 md:w-5 md:h-5" /> Buy Now
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="glass-panel rounded-2xl p-4 md:p-5 border border-destructive/20 text-center">
+                      <p className="font-heading font-bold text-destructive text-sm md:text-base">Currently Out of Stock</p>
+                      <p className="text-xs text-muted-foreground mt-1">Save it to your wishlist and we'll let you know when it's back.</p>
+                    </div>
+                    <button onClick={handleWishlist}
+                      className={`w-full h-12 md:h-14 rounded-2xl px-4 flex items-center justify-center gap-2 text-sm font-heading font-semibold transition-all duration-300 backdrop-blur-xl border ${wishlisted
+                        ? "bg-primary/15 text-primary border-primary/40 shadow-[0_0_24px_rgba(59,130,246,0.25)]"
+                        : "bg-white/55 text-foreground border-primary/20 hover:bg-primary/10 hover:border-primary/40 hover:shadow-[0_0_24px_rgba(59,130,246,0.25)]"}`}>
+                      <Heart className={`w-5 h-5 ${wishlisted ? "fill-primary" : ""}`} />
+                      {wishlisted ? "Saved — Notify Me When Back" : "Notify Me When Back"}
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

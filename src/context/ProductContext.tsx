@@ -12,6 +12,7 @@ interface ProductContextType {
   getSeasonalProducts: (season: string) => Product[];
   getProductById: (id: string) => Product | undefined;
   searchProducts: (query: string) => Product[];
+  decrementStock: (entries: { id: string; quantity: number }[]) => void;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -55,8 +56,16 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return products.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
   }, [products]);
 
+  const decrementStock = useCallback((entries: { id: string; quantity: number }[]) => {
+    setProducts(prev => prev.map(p => {
+      const e = entries.find(x => x.id === p.id);
+      if (!e) return p;
+      return { ...p, stock: Math.max(0, (p.stock || 0) - e.quantity) };
+    }));
+  }, []);
+
   return (
-    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, getProductsByCategory, getTrendingProducts, getFeaturedProducts, getSeasonalProducts, getProductById, searchProducts }}>
+    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, getProductsByCategory, getTrendingProducts, getFeaturedProducts, getSeasonalProducts, getProductById, searchProducts, decrementStock }}>
       {children}
     </ProductContext.Provider>
   );
