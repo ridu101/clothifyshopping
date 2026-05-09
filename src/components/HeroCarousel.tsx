@@ -195,74 +195,17 @@ const HeroCarousel = ({ products: incoming }: Props) => {
         onMouseLeave={handleMouseLeave}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className="relative min-h-[620px] md:min-h-[780px] lg:min-h-[860px] flex items-center justify-center overflow-hidden rounded-[40px] bg-white/40 backdrop-blur-2xl border border-white/40 px-4 md:px-10 py-10 md:py-16"
-        style={{ boxShadow: "0 30px 100px rgba(120,116,236,0.25)" }}
+        className="relative min-h-[520px] md:min-h-[780px] lg:min-h-[860px] flex items-center justify-center overflow-hidden rounded-[28px] md:rounded-[40px] bg-white/40 backdrop-blur-2xl border border-white/40 px-3 md:px-10 py-6 md:py-16"
+        style={{ boxShadow: "0 30px 100px rgba(59,130,246,0.22)" }}
       >
         {/* Carousel cards */}
         <div
-          className="relative w-full h-[620px] flex items-center justify-center overflow-visible"
+          className="relative w-full h-[500px] md:h-[620px] flex items-center justify-center overflow-visible"
           style={{ perspective: "1600px", transformStyle: "preserve-3d" }}
         >
-          {visibleSlides.map(({ product: p, index, slot }) => {
-            const isActive = slot === "center";
-            return (
-              <motion.div
-                key={`${p.id}-${slot}`}
-                initial={false}
-                animate={getSlotMotion(slot)}
-                transition={{ duration: DUR, ease: EASE }}
-                onClick={() => {
-                  if (!isActive) {
-                    setDirection(slot === "right" ? 1 : -1);
-                    setCurrent(index);
-                  }
-                }}
-                className={`absolute will-change-transform ${
-                  isActive ? "" : "hidden lg:block cursor-pointer hover:brightness-110"
-                }`}
-                style={{
-                  width: isActive ? "min(620px, 92vw)" : "240px",
-                  height: isActive ? "min(620px, 74vh)" : "420px",
-                  transformStyle: "preserve-3d",
-                  ...(isActive ? { x: cardX as unknown as number, y: cardY as unknown as number } : {}),
-                }}
-              >
-                {isActive ? (
-                  <ActiveCard
-                    p={p}
-                    direction={direction}
-                    imgX={imgX}
-                    imgY={imgY}
-                    onAddToCart={() => handleAddToCart(p)}
-                  />
-                ) : (
-                  <SideCard p={p} side={slot as "left" | "right"} />
-                )}
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Arrows — hidden on mobile */}
-        <button
-          onClick={prev}
-          aria-label="Previous"
-          className="hidden md:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-14 md:h-14 rounded-full items-center justify-center bg-white/70 backdrop-blur-xl border border-white/60 transition-all duration-300 hover:scale-110 hover:bg-white"
-          style={{ boxShadow: "0 10px 30px rgba(120,116,236,0.35)" }}
-        >
-          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-        </button>
-        <button
-          onClick={next}
-          aria-label="Next"
-          className="hidden md:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-14 md:h-14 rounded-full items-center justify-center bg-white/70 backdrop-blur-xl border border-white/60 transition-all duration-300 hover:scale-110 hover:bg-white"
-          style={{ boxShadow: "0 10px 30px rgba(120,116,236,0.35)" }}
-        >
-          <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-        </button>
-
+...
         {/* Indicators */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
           {items.map((_, i) => (
             <button
               key={i}
@@ -272,7 +215,7 @@ const HeroCarousel = ({ products: incoming }: Props) => {
               }}
               aria-label={`Go to slide ${i + 1}`}
               className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === current ? "w-10 bg-primary" : "w-1.5 bg-primary/30 hover:bg-primary/50"
+                i === current ? "w-8 md:w-10 bg-primary" : "w-1.5 bg-primary/30 hover:bg-primary/50"
               }`}
             />
           ))}

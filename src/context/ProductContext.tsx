@@ -17,7 +17,7 @@ interface ProductContextType {
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const STORAGE_KEY = "as_products_v3"; // bumped: new luxury shirt catalog with per-product images
+  const STORAGE_KEY = "as_products_v4"; // bumped: tshirt + panjabi + polo premium catalogs
   const [products, setProducts] = useState<Product[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);

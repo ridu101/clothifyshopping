@@ -9,8 +9,37 @@ import shirtBeige from "@/assets/shirt-beige.jpg";
 import shirtDarkgrey from "@/assets/shirt-darkgrey.jpg";
 import shirtBottlegreen from "@/assets/shirt-bottlegreen.jpg";
 import shirtBrown from "@/assets/shirt-brown.jpg";
+import tshirtBlack from "@/assets/tshirt-black.jpg";
+import tshirtWhite from "@/assets/tshirt-white.jpg";
+import tshirtOffwhite from "@/assets/tshirt-offwhite.jpg";
+import tshirtNavy from "@/assets/tshirt-navy.jpg";
+import tshirtSkyblue from "@/assets/tshirt-skyblue.jpg";
+import tshirtOlive from "@/assets/tshirt-olive.jpg";
+import tshirtBeige from "@/assets/tshirt-beige.jpg";
+import tshirtDarkgrey from "@/assets/tshirt-darkgrey.jpg";
+import tshirtBrown from "@/assets/tshirt-brown.jpg";
+import tshirtBottlegreen from "@/assets/tshirt-bottlegreen.jpg";
+import panjabiOffwhite from "@/assets/panjabi-offwhite.jpg";
+import panjabiBlack from "@/assets/panjabi-black.jpg";
+import panjabiNavy from "@/assets/panjabi-navy.jpg";
+import panjabiMaroon from "@/assets/panjabi-maroon.jpg";
+import panjabiOlive from "@/assets/panjabi-olive.jpg";
+import panjabiBeige from "@/assets/panjabi-beige.jpg";
+import panjabiBrown from "@/assets/panjabi-brown.jpg";
+import panjabiDarkgrey from "@/assets/panjabi-darkgrey.jpg";
+import panjabiBottlegreen from "@/assets/panjabi-bottlegreen.jpg";
+import panjabiSkyblue from "@/assets/panjabi-skyblue.jpg";
+import poloBlack from "@/assets/polo-black.jpg";
+import poloWhite from "@/assets/polo-white.jpg";
+import poloNavy from "@/assets/polo-navy.jpg";
+import poloSkyblue from "@/assets/polo-skyblue.jpg";
+import poloOlive from "@/assets/polo-olive.jpg";
+import poloMaroon from "@/assets/polo-maroon.jpg";
+import poloBeige from "@/assets/polo-beige.jpg";
+import poloDarkgrey from "@/assets/polo-darkgrey.jpg";
+import poloBottlegreen from "@/assets/polo-bottlegreen.jpg";
+import poloBrown from "@/assets/polo-brown.jpg";
 
-// Premium luxury shirt catalog — same model, only color changes
 const shirtCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
   { name: "Onyx Black Premium Shirt", image: shirtBlack, color: { name: "Black", code: "#1a1a1a" } },
   { name: "Pearl White Premium Shirt", image: shirtWhite, color: { name: "White", code: "#f8f9fa" } },
@@ -22,6 +51,45 @@ const shirtCatalog: { name: string; image: string; color: { name: string; code: 
   { name: "Charcoal Grey Premium Shirt", image: shirtDarkgrey, color: { name: "Dark Grey", code: "#3a3a3a" } },
   { name: "Bottle Green Premium Shirt", image: shirtBottlegreen, color: { name: "Bottle Green", code: "#0b3d2e" } },
   { name: "Chocolate Brown Premium Shirt", image: shirtBrown, color: { name: "Chocolate Brown", code: "#3e1f0f" } },
+];
+
+const tshirtCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
+  { name: "Onyx Black Oversized T-Shirt", image: tshirtBlack, color: { name: "Black", code: "#1a1a1a" } },
+  { name: "Pure White Oversized T-Shirt", image: tshirtWhite, color: { name: "White", code: "#f8f9fa" } },
+  { name: "Off White Oversized T-Shirt", image: tshirtOffwhite, color: { name: "Off White", code: "#f2eedf" } },
+  { name: "Navy Blue Oversized T-Shirt", image: tshirtNavy, color: { name: "Navy Blue", code: "#0f2347" } },
+  { name: "Sky Blue Oversized T-Shirt", image: tshirtSkyblue, color: { name: "Sky Blue", code: "#9ecff0" } },
+  { name: "Olive Green Oversized T-Shirt", image: tshirtOlive, color: { name: "Olive Green", code: "#556b2f" } },
+  { name: "Beige Oversized T-Shirt", image: tshirtBeige, color: { name: "Beige", code: "#c9ab83" } },
+  { name: "Dark Grey Oversized T-Shirt", image: tshirtDarkgrey, color: { name: "Dark Grey", code: "#4a4a4a" } },
+  { name: "Chocolate Brown Oversized T-Shirt", image: tshirtBrown, color: { name: "Chocolate Brown", code: "#4a2a1b" } },
+  { name: "Bottle Green Oversized T-Shirt", image: tshirtBottlegreen, color: { name: "Bottle Green", code: "#0b4a3f" } },
+];
+
+const panjabiCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
+  { name: "Eid Off White Premium Panjabi", image: panjabiOffwhite, color: { name: "Off White", code: "#f3ead8" } },
+  { name: "Eid Black Premium Panjabi", image: panjabiBlack, color: { name: "Black", code: "#181818" } },
+  { name: "Eid Navy Blue Premium Panjabi", image: panjabiNavy, color: { name: "Navy Blue", code: "#132a57" } },
+  { name: "Eid Maroon Premium Panjabi", image: panjabiMaroon, color: { name: "Maroon", code: "#6f1d2b" } },
+  { name: "Eid Olive Green Premium Panjabi", image: panjabiOlive, color: { name: "Olive Green", code: "#6d7d33" } },
+  { name: "Eid Beige Premium Panjabi", image: panjabiBeige, color: { name: "Beige", code: "#c9aa7a" } },
+  { name: "Eid Chocolate Brown Premium Panjabi", image: panjabiBrown, color: { name: "Chocolate Brown", code: "#5a3421" } },
+  { name: "Eid Dark Grey Premium Panjabi", image: panjabiDarkgrey, color: { name: "Dark Grey", code: "#575757" } },
+  { name: "Eid Bottle Green Premium Panjabi", image: panjabiBottlegreen, color: { name: "Bottle Green", code: "#0b4a3a" } },
+  { name: "Eid Sky Blue Premium Panjabi", image: panjabiSkyblue, color: { name: "Sky Blue", code: "#a9d7f3" } },
+];
+
+const poloCatalog: { name: string; image: string; color: { name: string; code: string } }[] = [
+  { name: "Black Luxury Polo Shirt", image: poloBlack, color: { name: "Black", code: "#111111" } },
+  { name: "White Luxury Polo Shirt", image: poloWhite, color: { name: "White", code: "#f8f9fa" } },
+  { name: "Navy Blue Luxury Polo Shirt", image: poloNavy, color: { name: "Navy Blue", code: "#10284d" } },
+  { name: "Sky Blue Luxury Polo Shirt", image: poloSkyblue, color: { name: "Sky Blue", code: "#add8f0" } },
+  { name: "Olive Green Luxury Polo Shirt", image: poloOlive, color: { name: "Olive Green", code: "#708238" } },
+  { name: "Maroon Luxury Polo Shirt", image: poloMaroon, color: { name: "Maroon", code: "#7a1f33" } },
+  { name: "Beige Luxury Polo Shirt", image: poloBeige, color: { name: "Beige", code: "#ceb084" } },
+  { name: "Dark Grey Luxury Polo Shirt", image: poloDarkgrey, color: { name: "Dark Grey", code: "#4a4f55" } },
+  { name: "Bottle Green Luxury Polo Shirt", image: poloBottlegreen, color: { name: "Bottle Green", code: "#0f5a45" } },
+  { name: "Chocolate Brown Luxury Polo Shirt", image: poloBrown, color: { name: "Chocolate Brown", code: "#5b3728" } },
 ];
 
 export interface ProductColor {
@@ -90,12 +158,12 @@ const generateProducts = (): Product[] => {
   const sizeSets = [["S", "M", "L", "XL"], ["M", "L", "XL", "XXL"], ["S", "M", "L"]];
 
   const namesByCategory: Record<string, string[]> = {
-    panjabi: ["Royal Silk Panjabi", "Premium Cotton Panjabi", "Embroidered Panjabi", "Classic White Panjabi", "Navy Blue Panjabi", "Festive Gold Panjabi", "Slim Fit Panjabi", "Designer Panjabi", "Traditional Panjabi", "Modern Cut Panjabi"],
+    panjabi: panjabiCatalog.map((item) => item.name),
     shirt: ["Oxford Button Down", "Slim Fit Formal", "Linen Casual Shirt", "Denim Shirt", "Printed Casual Shirt", "White Classic Shirt", "Striped Office Shirt", "Mandarin Collar Shirt", "Flannel Check Shirt", "Satin Evening Shirt"],
     pant: ["Slim Fit Chinos", "Classic Formal Trouser", "Jogger Pants", "Cargo Pants", "Skinny Jeans", "Straight Cut Denim", "Linen Trousers", "Track Pants", "Pleated Pants", "Tapered Fit Pants"],
     katua: ["Premium Katua Set", "Casual Katua", "Festive Katua", "Embroidered Katua", "Cotton Katua", "Designer Katua", "Traditional Katua", "Modern Katua", "Silk Blend Katua", "Printed Katua"],
-    tshirt: ["Graphic Tee", "Plain Round Neck", "V-Neck Essential", "Oversized Tee", "Striped T-Shirt", "Vintage Wash Tee", "Athletic Fit Tee", "Pocket T-Shirt", "Henley T-Shirt", "Longline Tee"],
-    polo: ["Classic Polo", "Sporty Polo", "Premium Pique Polo", "Contrast Collar Polo", "Slim Fit Polo", "Striped Polo", "Textured Polo", "Performance Polo", "Tipped Polo", "Jersey Polo"],
+    tshirt: tshirtCatalog.map((item) => item.name),
+    polo: poloCatalog.map((item) => item.name),
     hoodie: ["Pullover Hoodie", "Zip-Up Hoodie", "Oversized Hoodie", "Fleece Hoodie", "Graphic Hoodie", "Tech Hoodie", "Cropped Hoodie", "Essential Hoodie", "Acid Wash Hoodie", "Embroidered Hoodie"],
     jacket: ["Puffer Jacket", "Bomber Jacket", "Windbreaker", "Quilted Jacket", "Leather Jacket", "Denim Jacket", "Parka Coat", "Fleece Jacket", "Down Jacket", "Utility Jacket"],
   };
@@ -128,13 +196,18 @@ const generateProducts = (): Product[] => {
       const seasonal = i < 2 ? "eid" : i < 4 ? "winter" : i < 6 ? "summer" : undefined;
       const costPrice = Math.round(price * (0.4 + Math.random() * 0.2));
 
-      // Shirt category uses the dedicated luxury catalog (one image + matching color per product)
-      const isShirt = cat.slug === "shirt";
-      const shirtItem = isShirt ? shirtCatalog[i] : undefined;
-      const productImage = shirtItem ? shirtItem.image : baseImage;
-      const productTitle = shirtItem ? shirtItem.name : (names[i] || `${cat.name} Item ${i + 1}`);
-      const colors = shirtItem
-        ? [{ name: shirtItem.color.name, code: shirtItem.color.code, image: shirtItem.image }]
+      const premiumCatalogMap: Partial<Record<string, { name: string; image: string; color: { name: string; code: string } }[]>> = {
+        shirt: shirtCatalog,
+        tshirt: tshirtCatalog,
+        panjabi: panjabiCatalog,
+        polo: poloCatalog,
+      };
+
+      const premiumItem = premiumCatalogMap[cat.slug]?.[i];
+      const productImage = premiumItem ? premiumItem.image : baseImage;
+      const productTitle = premiumItem ? premiumItem.name : (names[i] || `${cat.name} Item ${i + 1}`);
+      const colors = premiumItem
+        ? [{ name: premiumItem.color.name, code: premiumItem.color.code, image: premiumItem.image }]
         : colorSets[i % colorSets.length].map(c => ({ ...c, image: baseImage }));
 
       products.push({
