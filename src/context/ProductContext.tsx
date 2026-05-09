@@ -17,13 +17,14 @@ interface ProductContextType {
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const STORAGE_KEY = "as_products_v4"; // bumped: tshirt + panjabi + polo premium catalogs
+  const STORAGE_KEY = "as_products_v5"; // bumped: pant + hoodie + jacket catalogs, katua removed
   const [products, setProducts] = useState<Product[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       // Drop legacy caches
       localStorage.removeItem("as_products");
       localStorage.removeItem("as_products_v2");
+      localStorage.removeItem("as_products_v4");
       return saved ? JSON.parse(saved) : defaultProducts;
     } catch { return defaultProducts; }
   });
