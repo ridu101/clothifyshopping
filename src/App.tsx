@@ -56,6 +56,7 @@ const App = () => (
                 <Toaster />
                 <Sonner />
                 <BrowserRouter>
+                  <ScrollToTop />
                   <AnimatedBackground />
                   <Navbar />
                   <CartDrawer />
