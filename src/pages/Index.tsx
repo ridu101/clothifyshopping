@@ -7,6 +7,7 @@ import HeroCarousel from "@/components/HeroCarousel";
 import { categories } from "@/data/products";
 import { useProducts } from "@/context/ProductContext";
 import { toast } from "sonner";
+import { useSettings } from "@/context/SettingsContext";
 
 const features = [
   { icon: Truck, title: "Free Delivery", desc: "On orders over ৳2000" },
