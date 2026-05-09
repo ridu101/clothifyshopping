@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useOrders } from "@/context/OrderContext";
+import { useProducts } from "@/context/ProductContext";
 import { Minus, Plus, Trash2, ArrowLeft, CheckCircle, X, Wallet, CreditCard } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
