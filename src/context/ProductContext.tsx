@@ -12,6 +12,7 @@ interface ProductContextType {
   getSeasonalProducts: (season: string) => Product[];
   getProductById: (id: string) => Product | undefined;
   searchProducts: (query: string) => Product[];
+  decrementStock: (entries: { id: string; quantity: number }[]) => void;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
