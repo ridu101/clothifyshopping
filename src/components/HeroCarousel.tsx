@@ -203,7 +203,62 @@ const HeroCarousel = ({ products: incoming }: Props) => {
           className="relative w-full h-[500px] md:h-[620px] flex items-center justify-center overflow-visible"
           style={{ perspective: "1600px", transformStyle: "preserve-3d" }}
         >
-...
+          <AnimatePresence initial={false} custom={direction}>
+            {visibleSlides.map(({ slot, product, index }) => {
+              const motionState = getSlotMotion(slot);
+              const isCenter = slot === "center";
+              return (
+                <motion.div
+                  key={`${product.id}-${slot}`}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88%] sm:w-[70%] md:w-[460px] h-full"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={motionState}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: DUR, ease: EASE }}
+                  style={{ x: isCenter ? cardX : undefined, y: isCenter ? cardY : undefined }}
+                  onClick={() => {
+                    if (!isCenter) {
+                      setDirection(slot === "right" ? 1 : -1);
+                      setCurrent(index);
+                    }
+                  }}
+                >
+                  {isCenter ? (
+                    <ActiveCard
+                      p={product}
+                      direction={direction}
+                      imgX={imgX}
+                      imgY={imgY}
+                      onAddToCart={() => handleAddToCart(product)}
+                    />
+                  ) : (
+                    <SideCard p={product} side={slot as "left" | "right"} />
+                  )}
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+
+        {items.length > 1 && (
+          <>
+            <button
+              onClick={prev}
+              aria-label="Previous"
+              className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/70 backdrop-blur-xl border border-white/60 text-primary flex items-center justify-center hover:bg-white transition"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={next}
+              aria-label="Next"
+              className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/70 backdrop-blur-xl border border-white/60 text-primary flex items-center justify-center hover:bg-white transition"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </>
+        )}
+
         {/* Indicators */}
         <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
           {items.map((_, i) => (
