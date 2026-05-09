@@ -152,8 +152,9 @@ const ProductPage = () => {
                   <Zap className="w-4 h-4 md:w-5 md:h-5" /> Buy Now
                 </button>
                 <button onClick={handleWishlist}
-                  className={`glass-panel h-10 md:h-14 rounded-xl md:rounded-2xl px-4 transition-colors duration-300 ${wishlisted ? "bg-primary/10 text-primary border-primary/30" : "hover:bg-primary/5"}`}>
+                  className={`glass-panel h-10 md:h-14 rounded-xl md:rounded-2xl px-4 flex items-center justify-center gap-2 text-xs md:text-sm transition-colors duration-300 ${wishlisted ? "bg-primary/10 text-primary border-primary/30" : "hover:bg-primary/5"}`}>
                   <Heart className={`w-4 h-4 md:w-5 md:h-5 ${wishlisted ? "fill-primary" : ""}`} />
+                  <span className="md:hidden">{wishlisted ? "Wishlisted" : "Wishlist"}</span>
                 </button>
               </div>
             )}
