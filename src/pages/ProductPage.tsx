@@ -21,6 +21,7 @@ const ProductPage = () => {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [qty, setQty] = useState(1);
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
 
   // Scroll to top on product change
   useEffect(() => {
