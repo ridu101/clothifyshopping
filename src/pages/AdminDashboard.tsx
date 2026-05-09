@@ -46,13 +46,11 @@ const AdminDashboard = () => {
     }
   };
 
-  const activeReturns = returns.filter(r => !["approved_refund", "exchange_sent", "rejected"].includes(r.status));
-
   const counts: Record<string, number | string> = {
     Orders: orders.length,
     Products: products.length,
     Sells: `৳${orders.filter(o => o.status === "delivered").reduce((s, o) => s + o.totalPrice, 0)}`,
-    "Return Orders": activeReturns.length,
+    "Return Orders": returns.length,
   };
 
   return (
