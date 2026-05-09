@@ -27,7 +27,8 @@ const AdminDashboard = () => {
   const { user, isAdmin, logout } = useAuth();
   const { orders } = useOrders();
   const { products } = useProducts();
-  const [selectedSeason, setSelectedSeason] = useState(() => localStorage.getItem("clothify_season") || "");
+  const { returns } = useReturns();
+  const { activeSeason, setActiveSeason } = useSettings();
 
   useEffect(() => {
     if (!isAdmin) navigate("/login");
@@ -35,23 +36,23 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => { await logout(); navigate("/login"); };
 
-  const handleSeasonChange = (season: string) => {
-    if (selectedSeason === season) {
-      setSelectedSeason("");
-      localStorage.removeItem("clothify_season");
+  const handleSeasonChange = async (season: string) => {
+    if (activeSeason === season) {
+      await setActiveSeason("");
       toast.success("Seasonal collection cleared");
     } else {
-      setSelectedSeason(season);
-      localStorage.setItem("clothify_season", season);
+      await setActiveSeason(season);
       toast.success(`${season.charAt(0).toUpperCase() + season.slice(1)} collection activated`);
     }
   };
+
+  const activeReturns = returns.filter(r => !["approved_refund", "exchange_sent", "rejected"].includes(r.status));
 
   const counts: Record<string, number | string> = {
     Orders: orders.length,
     Products: products.length,
     Sells: `৳${orders.filter(o => o.status === "delivered").reduce((s, o) => s + o.totalPrice, 0)}`,
-    "Return Orders": orders.filter(o => o.returnStatus).length,
+    "Return Orders": activeReturns.length,
   };
 
   return (
