@@ -97,7 +97,7 @@ const HOODIE: Chart = {
 
 function pickChart(category: string): Chart {
   const c = (category || "").toLowerCase().replace(/[^a-z]/g, "");
-  if (c.includes("panjabi") || c.includes("kurta") || c.includes("katua")) return PANJABI;
+  if (c.includes("panjabi") || c.includes("kurta")) return PANJABI;
   if (c.includes("pant") || c.includes("trouser") || c.includes("jeans")) return PANT;
   if (c.includes("hoodie") || c.includes("jacket")) return HOODIE;
   if (c.includes("tshirt") || c === "tee") return TSHIRT;

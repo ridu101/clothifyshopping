@@ -88,7 +88,6 @@ const App = () => (
                     <Route path="/panjabi" element={<CategoryPage />} />
                     <Route path="/shirt" element={<CategoryPage />} />
                     <Route path="/pant" element={<CategoryPage />} />
-                    <Route path="/katua" element={<CategoryPage />} />
                     <Route path="/tshirt" element={<CategoryPage />} />
                     <Route path="/polo" element={<CategoryPage />} />
                     <Route path="/hoodie" element={<CategoryPage />} />
