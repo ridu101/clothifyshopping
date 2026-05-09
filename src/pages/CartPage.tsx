@@ -13,6 +13,7 @@ const CartPage = () => {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
   const { user, isLoggedIn, requireAuth } = useAuth();
   const { placeOrder } = useOrders();
+  const { decrementStock } = useProducts();
   const navigate = useNavigate();
   const [deliveryLocation, setDeliveryLocation] = useState<"dhaka" | "outside">("dhaka");
   const [paymentMethod, setPaymentMethod] = useState<"cod" | "sslcommerz">("cod");
