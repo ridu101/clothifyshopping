@@ -17,12 +17,13 @@ interface ProductContextType {
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const STORAGE_KEY = "as_products_v2"; // bumped: enforce category-matched fallback images
+  const STORAGE_KEY = "as_products_v3"; // bumped: new luxury shirt catalog with per-product images
   const [products, setProducts] = useState<Product[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      // Drop the legacy v1 cache (mixed Unsplash images)
+      // Drop legacy caches
       localStorage.removeItem("as_products");
+      localStorage.removeItem("as_products_v2");
       return saved ? JSON.parse(saved) : defaultProducts;
     } catch { return defaultProducts; }
   });
