@@ -108,7 +108,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const addProduct = useCallback(async (product: Product) => {
     const row = toRow(product);
-    const { error } = await supabase.from("products").insert(row);
+    const { error } = await supabase.from("products").insert([row as any]);
     if (error) {
       toast.error("Failed to add product");
       console.error("[Products] insert:", error.message);
