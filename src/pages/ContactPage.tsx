@@ -26,7 +26,7 @@ const ContactPage = () => {
             <div className="glass-panel rounded-2xl p-6 space-y-5">
               <h2 className="font-heading text-lg font-bold text-foreground">Get in Touch</h2>
               {[
-                { icon: Mail, text: "ridu16540@gmail.com", label: "Email" },
+                { icon: Mail, text: "adminclothifyshop@gmail.com", label: "Email" },
                 { icon: Phone, text: "01308379952", label: "Phone" },
                 { icon: MapPin, text: "Dhaka, Bangladesh", label: "Location" },
               ].map(item => (
