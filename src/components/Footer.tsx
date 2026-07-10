@@ -23,7 +23,7 @@ const Footer = () => {
               Clothify Shopping
             </h3>
             <p className="text-xs md:text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto md:mx-0">
-              Premium fashion by Ridwan Ahmed.
+              Premium fashion by City University 63rd Student.
             </p>
           </div>
 
