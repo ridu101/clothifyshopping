@@ -43,7 +43,7 @@ const ContactPage = () => {
             </div>
             <div className="glass-panel rounded-2xl p-6">
               <h2 className="font-heading text-lg font-bold text-foreground mb-4">Owner</h2>
-              <p className="text-foreground">Ridwan Ahmed</p>
+              <p className="text-foreground">City University 63rd Student</p>
               <p className="text-sm text-muted-foreground mt-1">Founder & CEO, Clothify Shopping</p>
             </div>
             <div className="glass-panel rounded-2xl p-6">
