@@ -6,7 +6,7 @@ const AboutPage = () => (
       <h1 className="section-title text-foreground mb-6">About Clothify Shopping</h1>
       <div className="glass-panel rounded-2xl p-8 space-y-4 text-muted-foreground leading-relaxed">
         <p>
-          <strong className="text-foreground">Clothify Shopping</strong> is a premium fashion label founded by <strong className="text-foreground">Ridwan Ahmed</strong>, dedicated to bringing futuristic, high-quality clothing to the modern Bangladeshi consumer.
+          <strong className="text-foreground">Clothify Shopping</strong> is a premium fashion label founded by <strong className="text-foreground">City University 63rd Student</strong>, dedicated to bringing futuristic, high-quality clothing to the modern Bangladeshi consumer.
         </p>
         <p>
           Our collections span traditional Panjabis, casual streetwear, winter essentials, and everything in between — all curated with an eye for quality, fit, and contemporary design.
