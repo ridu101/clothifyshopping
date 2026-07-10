@@ -52,9 +52,9 @@ const Footer = () => {
               Contact
             </h4>
             <ul className="space-y-0.5 text-xs md:text-sm text-muted-foreground">
-              <li>Ridwan Ahmed</li>
+              <li>City University 63rd Student</li>
               <li>01308379952</li>
-              <li className="truncate">ridu16540@gmail.com</li>
+              <li className="truncate">adminclothifyshop@gmail.com</li>
             </ul>
           </div>
 
